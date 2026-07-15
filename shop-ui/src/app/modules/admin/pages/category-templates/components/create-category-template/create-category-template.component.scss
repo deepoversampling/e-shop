@@ -1,0 +1,16 @@
+@use '../../../../../../../styles' as *;
+
+.btn-action {
+  background-color: #0000;
+  // Size matching input height
+  height: 1.625rem;
+  width: 1.625rem;
+}
+
+.icon-info {
+
+  & i:hover::after {
+    @include hint(attr(data-content), translateX(-100%) translateY(calc($btn-height * 1.5)));
+    top: -$btn-height;
+  }
+}

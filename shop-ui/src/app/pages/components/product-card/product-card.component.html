@@ -1,0 +1,87 @@
+<div class="product-card flex-col border-full-one">
+  <h3 class="pt-one" tabindex="-1"><pre>{{ productTitle }}</pre></h3>
+  <app-rating [rating]="product().rate || 0"></app-rating>
+  <!-- Image, reflection and navigation -->
+  <div class="img-wrapper-1x1-80 border-full-two">
+    <img
+      [ngSrc]="ngSrc"
+      fill
+      alt="{{ `Image of ${product().name}` }}"
+      appImgErrorHandler
+      appImgFadeOnLoad
+    />
+    <div class="img-wrapper-1x1-100 reflection border-full-two">
+      <img
+        [ngSrc]="ngSrc"
+        fill
+        alt="Product image"
+        appImgErrorHandler
+        appImgFadeOnLoad
+      />
+    </div>
+    <button
+      class="btn-slider left"
+      type="button"
+      [disabled]="variantIndex === 0"
+      (click)="prevVariant()"
+    >⬅
+    </button>
+    <button
+      class="btn-slider right"
+      type="button"
+      [disabled]="variantIndex === variants.length - 1"
+      (click)="nextVariant()"
+    >➡
+    </button>
+  </div>
+  <!-- Description -->
+  <div class="flex-col align-self-start pl-half pr-half">
+    <span>{{ `Price: ${formatPrice(currentVariant)}` }}</span>
+    <span>{{ `Quantity: ${currentVariant.quantity}` }}</span>
+    <p tabindex="-1">{{ product().description }}</p>
+    <ul tabindex="-1">
+      @for (property of getVariantProperties(currentVariant); track property + $index) {
+        <li>
+          <span class="pl-half">{{ property }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+  <!-- Footer -->
+  <div class="footer pt-half pb-half">
+    <label for="quantityProductCard">Quantity:</label>
+    <input
+      id="quantityProductCard"
+      type="number"
+      required
+      [min]="0"
+      [max]="currentVariant.quantity ?? 0"
+      [(ngModel)]="quantity"
+      [disabled]="alreadyInCart() || isOwnProduct() || !isAuthenticated"
+    >
+    <button
+      class="btn btn-dodgers-blue btn-static"
+      type="button"
+      [disabled]="alreadyInCart() || isOwnProduct() || !isAuthenticated || !isQuantityValid()"
+      (click)="addToCard()"
+    >Add to cart
+    </button>
+    <!-- Status icons -->
+    @if (alreadyInCart()) {
+      <div class="icon-info align-self-center">
+        <i
+          class="fas fa-shopping-cart"
+          [attr.data-content]="'Already in cart'"
+        ></i>
+      </div>
+    }
+    @if (isOwnProduct()) {
+      <div class="icon-info align-self-center">
+        <i
+          class="fas fas fa-building-user"
+          [attr.data-content]="'Own product'"
+        ></i>
+      </div>
+    }
+  </div>
+</div>

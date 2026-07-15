@@ -1,0 +1,12 @@
+.btn-preset {
+  background-color: darkgrey;
+  color: black;
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  i {
+    font-size: 0.8rem;
+  }
+}

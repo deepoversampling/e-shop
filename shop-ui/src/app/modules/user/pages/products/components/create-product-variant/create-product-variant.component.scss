@@ -1,0 +1,23 @@
+@use '../../../../../../../styles' as *;
+
+input[type="text"] {
+  width: 3rem;
+}
+
+select {
+  width: 8rem;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: $color-off-white;
+}
+
+.icon-info {
+
+  & i:hover::after {
+    @include hint(attr(data-content), translateX(-100%) translateY(calc($btn-height * 1.5)));
+    top: -$btn-height;
+  }
+}

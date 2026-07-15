@@ -1,0 +1,635 @@
+@use '@fortawesome/fontawesome-free/css/all.css';
+@use 'ngx-toastr/toastr';
+
+$color-theme: #232322;
+$color-grey: #515151;
+$color-black: #0d0d0c;
+$color-dodger-blue: #1E90FF;
+$color-dodgers-blue: #005A9C;
+$color-off-white: #f1f0ee;
+$color-product-card: #222222;
+$color-grey-card-footer: #a4a4a4;
+$color-forest-green: #228B22;
+$color-red-sox-red: #BD3039;
+$color-mcdonalds-yellow: #FFC72C;
+$color-cart-active: #475561;
+$color-gold: #FFD700;
+$color-light-steel-blue: #cccccc;
+$color-bright-orange: #ff9d1c;
+
+$btn-height: 2.5rem;
+$btn-border-radius: 0.25rem;
+
+$animation-duration: 0.15s;
+
+$btn-colors: (
+  forest-green: $color-forest-green,
+  red-sox-red: $color-red-sox-red,
+  dodgers-blue: $color-dodgers-blue,
+  off-white: $color-off-white
+);
+
+$colors: (
+  off-white: $color-off-white,
+  dodgers-blue: $color-dodgers-blue,
+  red-sox-red: $color-red-sox-red,
+  forest-green: $color-forest-green,
+  mcdonalds-yellow: $color-mcdonalds-yellow,
+  gold: $color-gold,
+  bright-orange: $color-bright-orange
+);
+
+:root {
+  --color-theme: #{$color-theme};
+  --color-grey: #{$color-grey};
+  --color-black: #{$color-black};
+  --color-dodger-blue: #{$color-dodger-blue};
+  --color-dodgers-blue: #{$color-dodgers-blue};
+  --color-off-white: #{$color-off-white};
+  --color-product-card: #{$color-product-card};
+  --color-grey-card-footer: #{$color-grey-card-footer};
+  --color-forest-green: #{$color-forest-green};
+  --color-red-sox-red: #{$color-red-sox-red};
+  --color-mcdonalds-yellow: #{$color-mcdonalds-yellow};
+  --color-cart-active: #{$color-cart-active};
+  --color-gold: #{$color-gold};
+  --color-light-steel-blue: #{$color-light-steel-blue};
+  --color-bright-orange: #{$color-bright-orange};
+
+  --btn-height: #{$btn-height};
+  --animation-duration: #{$animation-duration};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0.5rem;
+  background-color: #2d2f31;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-grey);
+  margin: 0;
+  padding: 0;
+}
+
+/*                                                Containers                                                          */
+.flex-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flex-col-center-full {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flex-row-center-x {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 360px);
+  gap: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@mixin reflection-base($filter) {
+  position: absolute;
+  transform: translateY(100%) scaleY(-1);
+  filter: $filter;
+  pointer-events: none;
+}
+
+.reflection {
+  @include reflection-base(blur(0.5px) opacity(20%));
+}
+
+/*                                                Flex behaviour                                                      */
+.flex-fill { // Dictates children to take as much space as it is available
+  flex: 1 1 0; // The same as flex: 1
+  min-width: 0;
+  max-width: 100%;
+}
+
+.flex-wrap { // Wraps the items onto multiple lines if there is no space
+  flex-wrap: wrap;
+}
+
+/*                                                Gaps                                                                */
+.gap-one {
+  gap: 1rem;
+}
+
+.gap-half {
+  gap: 0.5rem;
+}
+
+.gap-none {
+  gap: 0;
+}
+
+/*                                                Aligns                                                              */
+.align-self-end {
+  align-self: flex-end;
+}
+
+.align-self-start {
+  align-self: flex-start;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/*                                                Margins                                                             */
+.mt-one {
+  margin-top: 1rem;
+}
+
+.mt-half {
+  margin-top: 0.5rem;
+}
+
+.mb-half {
+  margin-bottom: 0.5rem;
+}
+
+.ml-half {
+  margin-left: 0.5rem;
+}
+
+.mr-half {
+  margin-right: 0.5rem;
+}
+
+.mr-one {
+  margin-right: 1rem;
+}
+
+.mt-menu {
+  margin-top: calc($btn-height + 0.5rem);
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.thumbnails {
+  justify-items: center;
+}
+
+/*                                                Paddings                                                            */
+.pt-one {
+  padding-top: 1rem;
+}
+
+.p-half {
+  padding: 0.5rem;
+}
+
+.pt-half {
+  padding-top: 0.5rem;
+}
+
+.pb-half {
+  padding-bottom: 0.5rem;
+}
+
+.pl-half {
+  padding-left: 0.5rem;
+}
+
+.pr-half {
+  padding-right: 0.5rem;
+}
+
+.pt-quart {
+  padding-top: 0.25rem;
+}
+
+.pb-quart {
+  padding-bottom: 0.25rem;
+}
+
+.pl-quart {
+  padding-left: 0.25rem;
+}
+
+.pr-quart {
+  padding-right: 0.25rem;
+}
+
+/*                                                Borders                                                             */
+.border-full-one {
+  border: 1px solid $color-grey;
+  border-radius: 1rem;
+}
+
+.border-full-two {
+  border-radius: 2rem;
+}
+
+.border-full-action {
+  border: 2px dashed white;
+  border-radius: 1rem;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*                                                Buttons                                                             */
+@mixin hint($content: '', $transform: '') {
+  content: $content;
+  position: absolute;
+  transform: $transform;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: $color-black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+@mixin btn-base(
+  $position: relative,
+  $btn-height: $btn-height,
+  $padding: 0.5rem,
+  $border: none,
+  $border-radius: $btn-border-radius,
+  $background-color: $color-dodger-blue,
+  $color: white,
+  $font-size: 1rem,
+  $font-family: ('Arial', sans-serif),
+  $font-weight: normal,
+  $cursor: pointer
+
+) {
+  position: $position;
+  height: $btn-height;
+  box-sizing: border-box;
+  padding: $padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $background-color;
+  color: $color;
+  font-size: $font-size;
+  font-family: $font-family;
+  font-weight: $font-weight;
+  cursor: $cursor;
+  transition: all $animation-duration ease, outline 0s;
+}
+
+.btn {
+  @include btn-base();
+
+  &.active {
+    background: radial-gradient(ellipse at center, $color-dodger-blue, $color-dodgers-blue);
+    box-shadow: 0 0 10px $color-dodgers-blue;
+  }
+
+  &:not(.active) {
+    &:not(.btn-static):hover {
+      background: radial-gradient(ellipse at center, $color-dodger-blue, $color-dodgers-blue);
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    filter: saturate(0%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid white;
+  }
+}
+
+.btn-circle {
+  @include btn-base($border-radius: 50%, $font-size: 1.5rem, $font-family: ('Inter', sans-serif), $font-weight: bold, $cursor: default);
+  aspect-ratio: 1 / 1;
+}
+
+.btn-action {
+  border: 2px dashed white;
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+
+  &:hover::after {
+    @include hint(attr(data-content), translateY(-$btn-height));
+  }
+
+  &:disabled {
+    display: none;
+  }
+}
+
+@each $name, $color in $btn-colors {
+  .btn-#{$name} { // Targets elements using class .btn with concatenated color from $btn-colors
+    background-color: $color;
+
+    &:hover {
+      box-shadow: 0 0 10px $color;
+    }
+  }
+}
+
+@each $name, $color in $colors {
+  .color-#{"" + $name} {
+    color: $color;
+  }
+}
+
+/*                                                Icon info                                                           */
+.icon-info {
+  position: relative;
+
+  & i:hover::after {
+    @include hint(attr(data-content), translateX(-50%));
+    top: -$btn-height;
+  }
+}
+
+/*                                                Input, select                                                       */
+textarea {
+  font-size: 1rem;
+
+  &.ng-invalid.ng-dirty {
+    box-shadow: 0 0 16px 4px $color-red-sox-red;
+  }
+
+  &.ng-touched {
+    box-shadow: 0 0 16px 4px $color-red-sox-red;
+  }
+
+  &.ng-valid {
+    box-shadow: none;
+  }
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  font-size: 1rem;
+  padding: 0.25rem;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+input[type="number"]:focus-visible,
+input[type="text"]:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 10px var(--color-dodger-blue);
+  outline: none;
+}
+
+input[type="number"] {
+  width: 3rem;
+}
+
+input:invalid {
+  box-shadow: 0 0 16px 4px var(--color-red-sox-red);
+}
+
+/*                                                Label                                                               */
+label, legend {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/*                                                Stars                                                               */
+.fa-star,
+.fa-star-half {
+  font-size: 1.25rem;
+}
+
+.star-pair {
+  position: relative;
+
+  & > .clip-half { // Only clipped area is visible and clickable
+    clip-path: polygon(0 -100%, 50% -100%, 50% 100%, 0 100%, 0 0); // -100% prevents stars from being clipped at the top
+  }
+
+  & > .mirror {
+    transform: scaleX(-1);
+    position: absolute;
+    inset: 0;
+  }
+}
+
+/*                                                Item card                                                           */
+.item-card {
+  width: 900px;
+  box-sizing: border-box;
+  backdrop-filter: brightness(85%);
+
+  & .footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: $color-grey;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+
+  &.collapsed .footer {
+    border-radius: 1rem;
+  }
+}
+
+.item {
+  position: relative;
+
+  & > .img-wrapper {
+    position: relative;
+    width: 15%;
+    display: flex;
+    background-color: white;
+
+    & > img {
+      object-fit: contain; // Fill the box preserving aspect ratio
+      border-top-left-radius: inherit;
+    }
+  }
+
+  &:first-child > .img-wrapper {
+    border-top-left-radius: 1rem;
+  }
+}
+
+.item label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-off-white);
+}
+
+.item h3 {
+  color: $color-mcdonalds-yellow;
+}
+
+.item p,
+.item ul {
+  color: var(--color-off-white);
+  font-family: "Georgia", sans-serif;
+}
+
+.item p {
+  height: auto;
+  line-height: 1.5rem;
+  scrollbar-color: grey transparent;
+}
+
+.item ul {
+  height: auto;
+  line-height: 1.5em;
+  list-style-position: inside;
+
+  & > li::marker {
+    content: '•';
+  }
+
+  & li > span {
+    font-weight: normal;
+    padding-left: 0.5rem;
+  }
+}
+
+.item li::marker {
+  content: '•';
+}
+
+/*                                                appImgFadeOnLoad                                                    */
+.fade-in {
+  animation: fadeIn $animation-duration ease-out forwards; // transition will end slow, style stays after animation ends
+}
+
+.fade-out {
+  animation: fadeOut $animation-duration ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.img-fade {
+  position: absolute;
+  width: 100%;
+  object-fit: contain;
+  aspect-ratio: 1 / 1;
+}
+
+/*                                                Category                                                            */
+@mixin dot($direction) {
+  content: '';
+  position: absolute;
+  width: 1.25rem;
+  aspect-ratio: 1 / 1;
+  background-color: var(--btn-tile-color);
+  border-radius: 50%;
+  @if $direction == up {
+    top: 0;
+    transform: translateY(-50%);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  } @else {
+    bottom: 0;
+    transform: translateY(50%);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+}
+
+.btn-tile {
+  @include btn-base($border-radius: 1rem, $background-color: transparent);
+
+  &.active {
+    transform: scale(1.05);
+    filter: saturate(150%);
+  }
+
+  &:not(.active):hover {
+    transform: scale(1.05);
+  }
+
+  &.up::before {
+    @include dot(up);
+  }
+
+  &.down:before {
+    @include dot(down);
+  }
+
+  &:focus-visible {
+    outline: 2px solid white;
+  }
+
+  & > i {
+    padding-right: 0.25rem;
+  }
+}
+
+fieldset {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-bottom: none;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-radius: 1rem;
+}

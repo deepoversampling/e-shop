@@ -1,0 +1,101 @@
+<app-menu></app-menu>
+
+@if (isReady) {
+  <!-- Properties/property drafts and new property button -->
+  <div class="flex-row mt-menu">
+    <!-- Properties/property drafts -->
+    <div class="flex-col">
+      <!-- Properties -->
+      @for (property of properties; track property.id) {
+        <div
+          class="border-full-one flex-col item-card"
+          [class.collapsed]="!isPropertyVisible(property)"
+        >
+          <!-- Property description -->
+          <div
+            appExpandable
+            [expanded]="isPropertyVisible(property)"
+            [changed]="false"
+            [count]="1"
+          >
+            <div class="flex-col p-half item">
+              @if (property.unit) {
+                <p>{{ `Unit: ${property.unit}` }}</p>
+                <hr>
+              }
+              @if (isPropertyContinuous(property)) {
+                <p>{{ `Step: ${property.step}` }}</p>
+                <hr>
+                <p>{{ `Min: ${property.min}` }}</p>
+                <hr>
+                <p>{{ `Max: ${property.max}` }}</p>
+                <hr>
+              }
+              <p>Presets:</p>
+              <hr>
+              <ul>
+                @for (preset of property.presets; track preset.id) {
+                  <li>
+                    <!-- Displays the unit conditionally -->
+                    {{ formatPreset(property, preset) }}
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+          <!-- Footer -->
+          <div class="footer p-half">
+            <!-- Property name -->
+            <h2 class="color-off-white">{{ property.name }}</h2>
+            <!-- Action icons -->
+            <div class="flex-row ml-auto">
+              @if (!isPropertyInTemplates(property)) {
+                <div class="icon-info color-red-sox-red">
+                  <i
+                    class="fa-solid fa-trash-alt"
+                    [attr.data-content]="'Remove property'"
+                    (click)="removeProperty(property)"
+                  ></i>
+                </div>
+              }
+              @if (isPropertyVisible(property)) {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye-low-vision"
+                    [attr.data-content]="'Collapse property'"
+                    (click)="changePropertyVisibility(property)"
+                  ></i>
+                </div>
+              } @else {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye"
+                    [attr.data-content]="'Expand property'"
+                    (click)="changePropertyVisibility(property)"
+                  ></i>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      <!-- Property drafts -->
+      @for (entry of propertyDraftCacheEntries; track entry[0]) {
+        <app-create-property
+          [propertyDraftCacheId]="getPropertyDraftCacheId(entry)"
+          [propertyDraftCache]="getPropertyDraftCache(entry)"
+        ></app-create-property>
+      }
+    </div>
+
+    <!-- New property button -->
+    <button
+      class="btn btn-forest-green btn-static btn-action align-self-end"
+      [attr.data-content]="'Create new property'"
+      type="button"
+      (click)="createPropertyDraftCache()"
+    >
+      <i class="fa-solid fa-plus-square"></i>
+    </button>
+  </div>
+}

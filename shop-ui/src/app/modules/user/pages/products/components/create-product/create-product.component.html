@@ -1,0 +1,67 @@
+<div class="flex-col p-half border-full-action item-card">
+  <!-- Name and cancel button -->
+  <div class="flex-row align-end">
+    <label class="color-off-white" for="name">Name:</label>
+    <input
+      id="name"
+      type="text"
+      required
+      [(ngModel)]="productDraftCache().name"
+    >
+    <div class="icon-info color-red-sox-red ml-auto align-self-center">
+      <i
+        class="fa-solid fa-circle-xmark"
+        [attr.data-content]="'Cancel product creation form'"
+        (click)="cancel()"
+      ></i>
+    </div>
+  </div>
+  <hr>
+  <!-- Category -->
+  <div class="flex-row align-end">
+    <label for="category" class="color-off-white">Category:</label>
+    <select
+      id="category"
+      [(ngModel)]="productDraftCache().categoryId"
+    >
+      <option [ngValue]="null">None</option>
+      @for (category of leafCategories; track category.id) {
+        <option [ngValue]="category.id">
+          {{ category.name }}
+        </option>
+      }
+    </select>
+  </div>
+  <hr>
+  <!-- Description and validation -->
+  <div class="flex-col">
+    <textarea
+      [formControl]="productDraftCache().description"
+      rows="5"
+    ></textarea>
+    <!-- If control has errors and was modified or if it was focused and became blurred (lost focus) -->
+    @if (productDraftCache().description.invalid && (productDraftCache().description.dirty || productDraftCache().description.touched)) {
+      @if (productDraftCache().description.hasError('required')) {
+        <p class="color-off-white">
+          Comment is required
+        </p>
+      }
+      @if (productDraftCache().description.hasError('maxlength')) {
+        <p class="color-off-white">
+          Total length of a comment cannot exceed 255 characters
+        </p>
+      }
+    }
+  </div>
+  <hr>
+  <!-- Create product button -->
+  <div>
+    <button
+      class="btn btn-dodgers-blue btn-static"
+      type="button"
+      [disabled]="!hasCategory || !hasDescription || !hasName"
+      (click)="createProduct()"
+    >Create product
+    </button>
+  </div>
+</div>

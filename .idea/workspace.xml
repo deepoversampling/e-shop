@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docker-compose.local.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/github/workflows/pipeline-backend.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/cart-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-draft-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-draft-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/checkout-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/file-preview.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/page-response-feedback-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/page-response-product-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-draft-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-request.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-property-value-link-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-snapshot.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-draft-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-preset-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-response-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/quantity-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-icon-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-price-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-quantity-request-dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-draft-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-index-cache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/src/main/resources/application-docker.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop/src/main/resources/application-prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.docker.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/frontend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keycloak/export/e-shop.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/common/helpers/currency/currency-formatter.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/common/helpers/currency/currency-formatter.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/common/utils/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/common/utils/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/categories/category-list/category-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/categories/category-list/category-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/category-templates/components/create-category-template/create-category-template.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/category-templates/components/create-category-template/create-category-template.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/properties/components/create-property/create-property.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/properties/components/create-property/create-property.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/feedbacks/components/feedback-card/feedback-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/feedbacks/components/feedback-card/feedback-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product-variant/create-product-variant.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product-variant/create-product-variant.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product/create-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product/create-product.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/product-card/product-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/product-card/product-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-list/product-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-list/product-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/admin/properties-init/properties-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/admin/properties-init/properties-init.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/fn/category-template-controller/get-category-template-by-category-id.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/fn/category-template-controller/get-category-template-by-category-id.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/resources-init/resources-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/resources-init/resources-init.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/search-init/search-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/search-init/search-init.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/services/cart-controller.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/services/cart-controller.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/services/category-template-controller.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/services/category-template-controller.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/user/carts-init/carts-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/user/carts-init/carts-init.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/user/products-init/products-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/user/products-init/products-init.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/main.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/main.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/openapi/openapi.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/openapi/openapi.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/server.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.app.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.spec.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.spec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shop/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/aws/S3ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/aws/S3ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/ProductVariantSnapshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/ProductVariantSnapshot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/sort/SortUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/sort/SortUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/stripe/LineItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/stripe/LineItemBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/utils/UriUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/utils/UriUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/BeansConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/BeansConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/aws/AwsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/aws/AwsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/exception/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/exception/handler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/inteceptor/UserSynchronizerFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/inteceptor/UserSynchronizerFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/WebhookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/WebhookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/property/PropertyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/property/PropertyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/KeycloakJwtAuthenticationConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/KeycloakJwtAuthenticationConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/user/UserSynchronizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/user/UserSynchronizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/resources/application-dev.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+        <option value="Class" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="3EuGjrN2FIy9wjiNDvKnyxDc8Zm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ShopApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/prest/IdeaProjects/e-shop/shop-ui/src/app/services/models&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\prest\\IdeaProjects\\e-shop\\shop-ui\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\src\app\services\models" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop\src\main\resources" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\old angular json" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\prest\IdeaProjects\e-shop" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\final jsons" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\original jsons" />
+      <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\tmp" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="dev" />
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <module name="shop" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.javuar.shop.ShopApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="" />
+      <created>1781021178310</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781021178310</updated>
+      <workItem from="1781021179359" duration="9498000" />
+      <workItem from="1781111575298" duration="9622000" />
+      <workItem from="1781195797842" duration="8513000" />
+      <workItem from="1781365620726" duration="4697000" />
+      <workItem from="1781456838846" duration="3598000" />
+      <workItem from="1781460976648" duration="7858000" />
+      <workItem from="1781519885737" duration="1050000" />
+      <workItem from="1781520952736" duration="6553000" />
+      <workItem from="1781549023072" duration="1275000" />
+      <workItem from="1781611059330" duration="2631000" />
+      <workItem from="1781616908274" duration="12102000" />
+      <workItem from="1781684718205" duration="2824000" />
+      <workItem from="1781696257713" duration="5927000" />
+      <workItem from="1781816732545" duration="7528000" />
+      <workItem from="1781861738936" duration="7632000" />
+      <workItem from="1781904963235" duration="235000" />
+      <workItem from="1781905463559" duration="94000" />
+      <workItem from="1781907434084" duration="2742000" />
+      <workItem from="1781946300246" duration="4262000" />
+      <workItem from="1781952191736" duration="338000" />
+      <workItem from="1781952542726" duration="4076000" />
+      <workItem from="1781994033242" duration="34000" />
+      <workItem from="1782037591092" duration="2464000" />
+      <workItem from="1782061540168" duration="1566000" />
+      <workItem from="1782063130083" duration="4855000" />
+      <workItem from="1782083883582" duration="1715000" />
+      <workItem from="1782125223001" duration="13481000" />
+      <workItem from="1782209006548" duration="1945000" />
+      <workItem from="1782241483656" duration="485000" />
+      <workItem from="1782242133781" duration="621000" />
+      <workItem from="1782253963641" duration="582000" />
+      <workItem from="1782255135254" duration="729000" />
+      <workItem from="1782298666405" duration="11331000" />
+      <workItem from="1782473110949" duration="1137000" />
+      <workItem from="1782512455540" duration="573000" />
+      <workItem from="1782582060868" duration="5989000" />
+      <workItem from="1782662074750" duration="5103000" />
+      <workItem from="1782730934134" duration="9009000" />
+      <workItem from="1782921755644" duration="2880000" />
+      <workItem from="1782933585555" duration="1767000" />
+      <workItem from="1782987145036" duration="5612000" />
+      <workItem from="1783027172563" duration="3210000" />
+      <workItem from="1783112682125" duration="6916000" />
+      <workItem from="1783178537621" duration="6956000" />
+      <workItem from="1783213478557" duration="18000" />
+      <workItem from="1783214198640" duration="18000" />
+      <workItem from="1783214428704" duration="47000" />
+      <workItem from="1783214804769" duration="107000" />
+      <workItem from="1783250889837" duration="13065000" />
+      <workItem from="1783447988416" duration="4263000" />
+      <workItem from="1783541264428" duration="11260000" />
+      <workItem from="1783631594013" duration="8021000" />
+      <workItem from="1783712916287" duration="8888000" />
+      <workItem from="1783726531384" duration="751000" />
+      <workItem from="1783727347477" duration="17000" />
+      <workItem from="1783851969811" duration="5839000" />
+      <workItem from="1783984553183" duration="965000" />
+      <workItem from="1783985887944" duration="18000" />
+      <workItem from="1783986692474" duration="197000" />
+      <workItem from="1784063369676" duration="308000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

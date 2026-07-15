@@ -1,0 +1,25 @@
+<div class="flex-row">
+  @for (index of maxRating(); track index) {
+    <div class="star-pair" (mouseleave)="onMouseOut()">
+      <!-- Left side of the star -->
+      <!-- stopPropagation() prevents the click event from propagation further down and reset the note -->
+      <i
+        class="fas fa-star-half color-off-white clip-half"
+        [class.color-gold]="isHover
+          ? index + 0.5 <= noteHover
+          : index + 0.5 <= note()"
+        (mouseover)="onMouseOver(index + 0.5)"
+        (click)="noteValue = index + 0.5; $event.stopPropagation()"
+      ></i>
+      <!-- Right side of the star -->
+      <i
+        class="fas fa-star-half color-off-white clip-half mirror"
+        [class.color-gold]="isHover
+          ? index + 1 <= noteHover
+          : index + 1 <= note()"
+        (mouseover)="onMouseOver(index + 1)"
+        (click)="noteValue = index + 1; $event.stopPropagation()"
+      ></i>
+    </div>
+  }
+</div>

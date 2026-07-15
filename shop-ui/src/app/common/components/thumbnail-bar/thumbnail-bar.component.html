@@ -1,0 +1,72 @@
+<!-- Thumbnails and navigation -->
+<div class="flex-row">
+  <button
+    class="scroll-arrow"
+    type="button"
+    [disabled]="hasScroll! || isScrollMax"
+  >⬅
+  </button>
+  <div
+    #thumbnails
+    class="flex-row thumbnails"
+    (mousedown)="onMouseDown($event)"
+  >
+    <!-- item (imageUrl) isn't always unique, index concatenated to avoid NG0955 -->
+    @for (item of items; track item.url + $index) {
+      <div
+        class="thumbnail-wrapper"
+        #thumbnail_wrapper
+        [class.unavailable-item]="!isAvailable(item)"
+      >
+        <img
+          [ngSrc]="getNgSrc(item)"
+          fill
+          loading="eager"
+          alt="Item image"
+          appImgErrorHandler
+        />
+      </div>
+    }
+  </div>
+  <button
+    class="scroll-arrow"
+    type="button"
+    [disabled]="hasScroll! || isScrollMin"
+  >➡
+  </button>
+</div>
+<!-- Reflection of thumbnails and navigation -->
+<div class="flex-row reflection">
+  <button
+    class="scroll-arrow"
+    type="button"
+    [disabled]="hasScroll! || isScrollMax"
+  >⬅
+  </button>
+  <div
+    #thumbnails_reflection
+    class="flex-row thumbnails"
+    [scrollLeft]="scroll()"
+  >
+    @for (item of items; track item.url + $index) {
+      <div
+        class="thumbnail-wrapper"
+        [class.unavailable-item]="!isAvailable(item)"
+      >
+        <img
+          [ngSrc]="getNgSrc(item)"
+          fill
+          loading="eager"
+          alt="Item image"
+          appImgErrorHandler
+        />
+      </div>
+    }
+  </div>
+  <button
+    class="scroll-arrow"
+    type="button"
+    [disabled]="hasScroll! || isScrollMin"
+  >➡
+  </button>
+</div>

@@ -1,0 +1,58 @@
+<app-menu></app-menu>
+
+@if (isReady) {
+  <div class="flex-col mt-menu">
+    @for (cart of carts; track cart.id) {
+      @if (cart.isPaid) {
+        <div
+          class="border-full-one flex-col item-card"
+          [class.collapsed]="!isVisible(cart)"
+        >
+          <div
+            appExpandable
+            [expanded]="isVisible(cart)"
+            [changed]="false"
+            [count]="getCount(cart)"
+          >
+            <app-transaction-card [cart]="cart"></app-transaction-card>
+          </div>
+          @if (!isVisible(cart) && hasItems(cart)) {
+            <div class="flex-row justify-center pt-half">
+              <app-thumbnail-bar
+                [input]="cart"
+                [scroll]="getScroll(cart)"
+                [thumbnailsCount]="thumbnailsCount"
+                (scrollChange)="setScroll(cart, $event)"
+              ></app-thumbnail-bar>
+            </div>
+          }
+          <!-- Footer -->
+          <div class="footer p-half">
+            <!-- Transaction summary -->
+            <h2 class="color-off-white">{{ `Total: ${getTotal(cart)}` }}</h2>
+            <!-- Status icons -->
+            <div class="flex-row ml-auto">
+              @if (isVisible(cart)) {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye-low-vision"
+                    [attr.data-content]="'Collapse cart'"
+                    (click)="changeVisibility(cart)"
+                  ></i>
+                </div>
+              } @else {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye"
+                    [attr.data-content]="'Expand cart'"
+                    (click)="changeVisibility(cart)"
+                  ></i>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+}

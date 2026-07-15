@@ -1,0 +1,11 @@
+<div class="flex-col-center-full color-off-white">
+  <h1>Payment Failed</h1>
+  <p>Unfortunately, your transaction could not be completed.</p>
+  <p>You’ll be redirected back to the shop in <strong>{{ _countdownCurrent() }}</strong> seconds.</p>
+
+  <button
+    class="btn btn-dodgers-blue btn-static"
+    type="button"
+    (click)="goToShop()"
+  >Return to Shop</button>
+</div>

@@ -1,0 +1,11 @@
+<div class="flex-col-center-full color-off-white">
+  <h1>Payment Successful!</h1>
+  <p>Thank you for your purchase. Your order has been confirmed.</p>
+  <p>You'll be redirected to the shop in <strong>{{ _countdownCurrent() }}</strong> seconds.</p>
+
+  <button
+    class="btn btn-dodgers-blue btn-static"
+    type="button"
+    (click)="goToShop()"
+  >Go to Shop Now</button>
+</div>

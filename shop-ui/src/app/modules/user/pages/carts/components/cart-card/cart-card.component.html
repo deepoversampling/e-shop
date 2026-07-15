@@ -1,0 +1,82 @@
+@for (item of cart().items; track item.id) {
+  <div class="flex-row item">
+    <!-- Image column -->
+    <div
+      class="img-wrapper"
+      [class.unavailable-item]="!item.available || !item.present"
+    >
+      <img
+        [ngSrc]="getNgSrc(item)"
+        fill
+        alt="Item image"
+        appImgErrorHandler
+      />
+    </div>
+    <!-- Description and input column -->
+    <div class="flex-col pt-half pb-half flex-fill">
+      <h3>{{ getTitle(item) }}</h3>
+      <p>{{ item.productSnapshot?.description }}</p>
+      <ul>
+        @for (property of getItemProperties(item); track property) {
+          <li>
+            <span>{{ property }}</span>
+          </li>
+        }
+      </ul>
+      <!-- Change quantity -->
+      <div class="flex-row align-end">
+        <label for="quantity">Quantity:</label>
+        <input
+          id="quantity"
+          type="number"
+          required
+          [min]="0"
+          [max]="maxQuantity(item)"
+          [disabled]="!item.present"
+          [ngModel]="getQuantity(item)"
+          (ngModelChange)="setInputQuantity(item, $event)"
+        >
+        <button
+          class="btn btn-dodgers-blue btn-static"
+          type="button"
+          [disabled]="!isQuantityValid(item)"
+          (click)="updateQuantity(item)"
+        >Change quantity
+        </button>
+        <!-- Icons -->
+        <div class="flex-row align-self-center">
+          <!-- Action icons -->
+          <div class="icon-info color-red-sox-red">
+            <i
+              class="fa-solid fa-trash-alt"
+              [attr.data-content]="'Remove item'"
+              (click)="removeItem(item)"
+            ></i>
+          </div>
+          <!-- Status icons -->
+          @if (!item.present) {
+            <div class="icon-info color-bright-orange">
+              <i
+                class="fas fas fa-ban"
+                [attr.data-content]="'Product does not exist anymore'"
+              ></i>
+            </div>
+          } @else {
+            @if (!item.available) {
+              <div class="icon-info color-bright-orange">
+                <i
+                  class="fas fas fa-box-open"
+                  [attr.data-content]="'Product does not have enough quantity'"
+                ></i>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Item separator -->
+  @if (!$last) {
+    <hr>
+  }
+}

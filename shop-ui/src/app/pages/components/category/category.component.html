@@ -1,0 +1,74 @@
+<div class="flex-col mt-half mb-half">
+  <!-- Top category -->
+  <div class="flex-row-center-x">
+    <button
+      class="btn-tile"
+      type="button"
+      [class.active]="isSelected(currentCategory())"
+      [class.up]="hasParent(currentCategory())"
+      [style.--btn-tile-color]="currentCategory().color"
+      [style.color]="getColor(currentCategory())"
+      [style.border]="getBorder(currentCategory())"
+      [style.box-shadow]="getBoxShadow(currentCategory())"
+      (click)="onClick(currentCategory())"
+    >
+      @if (currentCategory().icon) {
+        <i
+          [class]="currentCategory().icon"
+          [style.color]="getColor(currentCategory())"
+        ></i>
+      }
+      <span>{{ currentCategory().name }}</span>
+    </button>
+  </div>
+  <!-- Middle categories -->
+  <div class="flex-row-center-x">
+    @for (childCategory of currentCategory().subcategories; track childCategory.id) {
+      <button
+        class="btn-tile"
+        type="button"
+        [class.active]="isSelected(childCategory)"
+        [style.color]="getColor(childCategory)"
+        [style.border]="getBorder(childCategory)"
+        [style.box-shadow]="getBoxShadow(childCategory)"
+        (click)="onClick(childCategory)"
+      >
+        @if (childCategory.icon) {
+          <i
+            [class]="childCategory.icon"
+            [style.color]="getColor(childCategory)"
+          ></i>
+        }
+        <span>{{ childCategory.name }}</span>
+      </button>
+    }
+  </div>
+  <!-- Bottom categories -->
+  <div class="flex-row-center-x">
+    @for (childCategory of currentCategory().subcategories; track childCategory.id) {
+      @for (grandChildCategory of childCategory.subcategories; track grandChildCategory.id) {
+        <button
+          class="btn-tile"
+          type="button"
+          [class.active]="isSelected(grandChildCategory)"
+          [class.down]="hasChildren(grandChildCategory)"
+          [style.--btn-tile-color]="grandChildCategory.color"
+          [style.color]="getColor(grandChildCategory)"
+          [style.border]="getBorder(grandChildCategory)"
+          [style.box-shadow]="getBoxShadow(grandChildCategory)"
+          (click)="onClick(grandChildCategory)"
+        >
+          @if (grandChildCategory.icon) {
+            <i
+              [class]="grandChildCategory.icon"
+              [style.color]="getColor(grandChildCategory)"
+            ></i>
+          }
+          <span>{{ grandChildCategory.name }}</span>
+        </button>
+      }
+    }
+  </div>
+</div>
+
+<!-- btn-tile-color property is used by category button with .up and .down classes to create pseudoelement with the same color as the category button -->

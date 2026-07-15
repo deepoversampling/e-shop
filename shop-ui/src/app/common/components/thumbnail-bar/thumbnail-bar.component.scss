@@ -1,0 +1,49 @@
+@use '../../../../styles' as *;
+
+.thumbnails {
+  min-width: 0;
+  background-color: #0000;
+  overflow-x: hidden;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  height: $btn-height;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  border-radius: 25%;
+
+  & > img {
+    object-fit: contain; // Fill the box preserving aspect ratio
+    -webkit-user-drag: none;
+    border-radius: inherit;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  &.unavailable-item {
+    filter: saturate(0);
+  }
+}
+
+.reflection {
+  transform: translateY(0) scaleY(-1);
+}
+
+.scroll-arrow {
+  @include btn-base($position: relative, $border: none, $background-color: transparent, $color: white, $font-weight: 900);
+  aspect-ratio: 1 / 1;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: none;
+
+  &:disabled {
+    visibility: hidden;
+  }
+}

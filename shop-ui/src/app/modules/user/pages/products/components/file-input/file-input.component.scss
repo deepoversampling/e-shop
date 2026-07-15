@@ -1,0 +1,24 @@
+.file-input { // Default <input>
+  display: none;
+}
+
+.btn-file {
+  background-color: darkgrey;
+  color: black;
+  font-size: 0.8rem;
+}
+
+.btn-circle {
+  font-size: 1rem;
+  height: 150%;
+}
+
+.thumbnail {
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain; // Fill the box preserving aspect ratio
+  border-radius: inherit;
+  user-select: none;
+  -webkit-user-drag: none;
+}

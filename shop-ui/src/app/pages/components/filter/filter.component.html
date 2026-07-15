@@ -1,0 +1,36 @@
+<fieldset class="flex-row mt-half mb-half gap-one flex-wrap">
+  <legend class="color-off-white">Properties:</legend>
+  @for (property of categoryTemplate.properties; track property.id) {
+    <!-- Label and filter -->
+    <div class="flex-row align-end">
+      <label class="color-off-white" [for]="property.id">{{ `${formatPropertyName(property)}:` }}</label>
+      @if (isPropertyContinuous(property)) {
+        <input
+          type="number"
+          [id]="property.id"
+          [min]="property.min!"
+          [max]="property.max!"
+          [step]="property.step"
+          [ngModel]="getFilterValue(property)"
+          (ngModelChange)="onFilterChange($event, property)"
+        >
+        @if (property.unit) {
+          <p class="color-off-white">{{ property.unit }}</p>
+        }
+      } @else {
+        <select
+          [id]="property.id"
+          [ngModel]="getFilterValue(property)"
+          (ngModelChange)="onFilterChange($event, property)"
+        >
+          <option [ngValue]="null">None</option>
+          @for (preset of property.presets; track preset.id) {
+            <option [ngValue]="preset.value">
+              {{ formatPreset(property, preset) }}
+            </option>
+          }
+        </select>
+      }
+    </div>
+  }
+</fieldset>

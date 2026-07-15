@@ -1,0 +1,81 @@
+<app-menu></app-menu>
+
+@if (isReady) {
+  <!-- Category templates or category template drafts -->
+  <div class="flex-col mt-menu">
+    @for (category of categories; track category.id) {
+      <div
+        class="border-full-one flex-col item-card"
+        [class.collapsed]="!isCategoryTemplateVisible(category)"
+      >
+        @if (hasCategoryTemplate(category)) {
+          <!-- Category template description -->
+          <div
+            appExpandable
+            [expanded]="isCategoryTemplateVisible(category)"
+            [changed]="false"
+            [count]="1"
+          >
+            <div class="flex-col p-half item">
+              <p>Properties:</p>
+              <hr>
+              <ul>
+                @for (property of getCategoryTemplate(category).properties; track property.id) {
+                  <li>
+                    {{ property.name }}
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        } @else {
+          <div
+            appExpandable
+            [expanded]="isCategoryTemplateVisible(category)"
+            [changed]="getCategoryTemplateResizeTrigger(category)"
+            [count]="1"
+          >
+            <app-create-category-template
+              [categoryId]="category.id!"
+              [categoryTemplateDraftCache]="getCategoryTemplateDraftCache(category)"
+            ></app-create-category-template>
+          </div>
+        }
+        <!-- Footer -->
+        <div class="footer p-half">
+          <!-- Name of the category the category template is assigned to -->
+          <h2 class="color-off-white">{{ category.name }}</h2>
+          <!-- Action icons -->
+          <div class="flex-row ml-auto">
+            @if (hasCategoryTemplate(category)) {
+              <div class="icon-info color-red-sox-red">
+                <i
+                  class="fa-solid fa-trash-alt"
+                  [attr.data-content]="'Remove category template'"
+                  (click)="removeCategoryTemplate(category)"
+                ></i>
+              </div>
+            }
+            @if (isCategoryTemplateVisible(category)) {
+              <div class="icon-info color-mcdonalds-yellow">
+                <i
+                  class="fa-solid fa-eye-low-vision"
+                  [attr.data-content]="'Collapse category template'"
+                  (click)="changeCategoryTemplateVisibility(category)"
+                ></i>
+              </div>
+            } @else {
+              <div class="icon-info color-mcdonalds-yellow">
+                <i
+                  class="fa-solid fa-eye"
+                  [attr.data-content]="'Expand category template'"
+                  (click)="changeCategoryTemplateVisibility(category)"
+                ></i>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

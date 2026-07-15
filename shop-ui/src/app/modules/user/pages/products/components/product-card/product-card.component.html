@@ -1,0 +1,145 @@
+@for (variant of product().variants; track variant.id) {
+  <div class="flex-row item">
+    <!-- Image column -->
+    <div class="img-wrapper">
+      <img
+        [ngSrc]="getNgSrc(variant)"
+        fill
+        alt="Item image"
+        appImgErrorHandler
+      />
+    </div>
+    <!-- Properties and input column -->
+    <div class="flex-col pt-half pb-half flex-fill">
+      <ul>
+        @for (property of getVariantProperties(variant); track property) {
+          <li>
+            <span>{{ property }}</span>
+          </li>
+        }
+      </ul>
+      <!-- Change price -->
+      <div class="flex-row align-end">
+        <label for="price">Price:</label>
+        <input
+          id="price"
+          type="text"
+          required
+          appTwoDecimalValidator
+          [ngModel]="getPrice(variant)"
+          (ngModelChange)="setPrice(variant, $event)"
+        >
+        <button
+          class="btn btn-dodgers-blue btn-static"
+          type="button"
+          [disabled]="!isPriceValid(variant)"
+          (click)="updatePrice(variant)"
+        >Change price
+        </button>
+      </div>
+      <!-- Change quantity -->
+      <div class="flex-row align-end">
+        <label for="quantity">Quantity:</label>
+        <input
+          id="quantity"
+          type="number"
+          required
+          min="0"
+          [ngModel]="getQuantity(variant)"
+          (ngModelChange)="setQuantity(variant, $event)"
+        >
+        <button
+          class="btn btn-dodgers-blue btn-static"
+          type="button"
+          [disabled]="!isQuantityValid(variant)"
+          (click)="updateQuantity(variant)"
+        >Change quantity
+        </button>
+      </div>
+      <!-- Change image -->
+      <div class="flex-row">
+        <app-file-input
+          [filePreview]="getFilePreview(variant)"
+          (filePreviewChange)="setFilePreview(variant, $event)"
+        ></app-file-input>
+        <button
+          class="btn btn-dodgers-blue btn-static"
+          type="button"
+          [disabled]="!hasFilePreview(variant)"
+          (click)="updateImage(variant)"
+        >Change image
+        </button>
+        <button
+          class="btn btn-red-sox-red btn-static"
+          type="button"
+          [disabled]="!hasImage(variant)"
+          (click)="removeImage(variant)"
+        >Remove image
+        </button>
+      </div>
+      <!-- Icons -->
+      <div class="flex-row">
+        <!-- Action icons -->
+        <div class="icon-info color-red-sox-red align-self-start">
+          <i
+            class="fa-solid fa-trash-alt"
+            [attr.data-content]="'Remove variant'"
+            (click)="removeVariant(variant)"
+          ></i>
+        </div>
+        @if (hasVariantCache(variant)) {
+          <div class="icon-info color-dodgers-blue align-self-start">
+            <i
+              class="fa-solid fa-pen-to-square"
+              [attr.data-content]="'Remove input data'"
+              (click)="clearVariantCache(variant)"
+            ></i>
+          </div>
+        }
+        <!-- Status icons -->
+        @if (hasVariantShortage(variant)) {
+          <div class="icon-info color-bright-orange">
+            <i
+              class="fa-solid fa-exclamation-circle"
+              [attr.data-content]="`Product variant has a shortage ${getVariantShortage(variant)}`"
+            ></i>
+          </div>
+        }
+      </div>
+      <!-- New variant button in non-empty product -->
+      @if ($last && hasVariants) {
+        <div class="mb-half mr-half absolute">
+          @if (!isVariantDraftVisible(product())) {
+            <button
+              class="btn btn-forest-green btn-static btn-action"
+              [attr.data-content]="'Create new product variant'"
+              type="button"
+              (click)="createVariantDraft()"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+  <!-- Variant separator -->
+  <hr>
+}
+
+@if (isVariantDraftVisible(product())) {
+  <app-create-product-variant
+    [product]="product()"
+  ></app-create-product-variant>
+} @else if (!hasVariants) {
+  <!-- New variant button in empty product -->
+  <button
+    class="btn btn-forest-green btn-static btn-action ml-auto mr-half mt-half mb-half"
+    [attr.data-content]="'Create new product variant'"
+    type="button"
+    (click)="createVariantDraft()"
+  >
+    <i class="fa-solid fa-plus"></i>
+  </button>
+  <hr>
+}

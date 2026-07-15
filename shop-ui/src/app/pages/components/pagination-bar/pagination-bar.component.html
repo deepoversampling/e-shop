@@ -1,0 +1,62 @@
+<div class="pagination-container">
+  <div
+    class="page-container"
+    [class.disabled]="productResponse().first"
+  >
+    <div class="page-background"></div>
+    <button
+      class="page"
+      (click)="goToFirstPage()"
+    >
+      <i class="fa-solid fa-angles-left"></i>
+    </button>
+  </div>
+  <div
+    class="page-container"
+    [class.disabled]="productResponse().first"
+  >
+    <div class="page-background"></div>
+    <button
+      class="page"
+      (click)="goToPreviousPage()"
+    >
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+  </div>
+  @for (pageIndex of totalPages(); track pageIndex) {
+    <div class="page-container">
+      <div class="page-background"></div>
+      <button
+        class="page"
+        [class.active]="productResponse().number === pageIndex"
+        (click)="goToPage(pageIndex)"
+      >
+        {{ pageIndex + 1 }}
+      </button>
+    </div>
+  }
+  <div
+    class="page-container"
+    [class.disabled]="productResponse().last"
+  >
+    <div class="page-background"></div>
+    <button
+      class="page"
+      (click)="goToNextPage()"
+    >
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+  <div
+    class="page-container"
+    [class.disabled]="productResponse().last"
+  >
+    <div class="page-background"></div>
+    <button
+      class="page"
+      (click)="goToLastPage()"
+    >
+      <i class="fa-solid fa-angles-right"></i>
+    </button>
+  </div>
+</div>

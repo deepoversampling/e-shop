@@ -1,0 +1,77 @@
+<div class="flex-col pt-half pb-half pl-half pr-half border-full-action item-card">
+  <!-- Name and cancel button -->
+  <div class="flex-row align-end">
+    <label class="color-off-white" for="name">Name:</label>
+    <input
+      id="name"
+      type="text"
+      [(ngModel)]="propertyDraftCache().name"
+    >
+    <div class="icon-info color-red-sox-red ml-auto align-self-center">
+      <i
+        class="fa-solid fa-circle-xmark"
+        [attr.data-content]="'Cancel property creation form'"
+        (click)="cancel()"
+      ></i>
+    </div>
+  </div>
+  <hr>
+  <!-- Unit -->
+  <div class="flex-row align-end">
+    <label class="color-off-white" for="unit">Unit:</label>
+    <input
+      id="unit"
+      type="text"
+      [(ngModel)]="propertyDraftCache().unit"
+    >
+  </div>
+  <hr>
+  <!-- New preset -->
+  <div class="flex-row align-end">
+    <label class="color-off-white" for="preset">New preset:</label>
+    <input
+      id="preset"
+      type="text"
+      [(ngModel)]="propertyDraftCache().preset"
+    >
+    <!-- New preset button -->
+    <button
+      class="btn btn-forest-green btn-static btn-action"
+      [attr.data-content]="'Create new preset'"
+      type="button"
+      [disabled]="!hasPreset || !isPresetUnique || !isPresetValid"
+      (click)="createPreset()"
+    >
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+  <hr>
+  @if (hasPresets) {
+    <!-- Presets -->
+    <fieldset>
+      <legend class="color-off-white">Current presets:</legend>
+      <div
+        id="presets"
+        class="flex-row flex-wrap"
+      >
+        @for (preset of presets; track preset) {
+          <app-preset
+            [preset]="preset"
+            (presetToRemove)="removePreset($event)"
+          ></app-preset>
+        }
+      </div>
+    </fieldset>
+    <hr>
+  }
+  <!-- Create property button -->
+  <div>
+    <button
+      class="btn btn-dodgers-blue btn-static"
+      type="button"
+      [disabled]="!hasName || !hasPresets"
+      (click)="createProperty()"
+    >Create property
+    </button>
+  </div>
+</div>

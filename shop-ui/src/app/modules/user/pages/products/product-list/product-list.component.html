@@ -1,0 +1,89 @@
+<app-menu></app-menu>
+
+@if (isReady) {
+  <!-- Products/product drafts and new product button -->
+  <div class="flex-row mt-menu">
+    <!-- Products/product drafts -->
+    <div class="flex-col">
+      <!-- Products -->
+      @for (product of products; track product.id) {
+        <div
+          class="border-full-one flex-col item-card"
+          [class.collapsed]="!isVisible(product)"
+          [class.gap-none]="!isVisible(product)"
+        >
+          <!-- Product and description or thumbnails -->
+          <div class="flex-col"
+               appExpandable
+               [expanded]="isVisible(product)"
+               [changed]="isVariantDraftVisible(product)"
+               [count]="getCount(product)"
+          >
+            <app-product-card [product]="product"></app-product-card>
+            <div><p class="color-off-white ml-half mr-half">{{ product.description }}</p></div>
+          </div>
+          @if (!isVisible(product) && hasVariants(product)) {
+            <div class="flex-row justify-center pt-half">
+              <app-thumbnail-bar
+                [input]="product"
+                [scroll]="getScroll(product)"
+                [thumbnailsCount]="thumbnailsCount"
+                (scrollChange)="setScroll(product, $event)"
+              ></app-thumbnail-bar>
+            </div>
+          }
+          <!-- Footer -->
+          <div class="footer p-half">
+            <!-- Product name -->
+            <h2 class="color-off-white">{{ product.name }}</h2>
+            <!-- Action icons -->
+            <div class="flex-row ml-auto">
+              <div class="icon-info color-red-sox-red">
+                <i
+                  class="fa-solid fa-trash-alt"
+                  [attr.data-content]="'Remove product'"
+                  (click)="removeProduct(product)"
+                ></i>
+              </div>
+              @if (isVisible(product)) {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye-low-vision"
+                    [attr.data-content]="'Collapse product'"
+                    (click)="changeVisibility(product)"
+                  ></i>
+                </div>
+              } @else {
+                <div class="icon-info color-mcdonalds-yellow">
+                  <i
+                    class="fa-solid fa-eye"
+                    [attr.data-content]="'Expand product'"
+                    (click)="changeVisibility(product)"
+                  ></i>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      <!-- Product drafts -->
+      @for (entry of productDraftCacheEntries; track entry[0]) {
+        <app-create-product
+          [productDraftCacheId]="getProductDraftCacheId(entry)"
+          [productDraftCache]="getProductDraftCache(entry)"
+        ></app-create-product>
+      }
+    </div>
+
+    <!-- New product button -->
+    <button
+      class="btn btn-forest-green btn-static btn-action align-self-end"
+      [attr.data-content]="'Create new product'"
+      type="button"
+      (click)="createProductDraftCache()"
+    >
+      <i class="fa-solid fa-plus-square"></i>
+    </button>
+
+  </div>
+}

@@ -1,0 +1,165 @@
+<div class="flex-row mb-half">
+  @if (isAuthenticated) {
+    <!-- ADMIN navigation buttons -->
+    @if (userRole === 'ADMIN') {
+      <div class="flex-row">
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/search'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-search"></i>
+          <span>Search</span>
+          <i class="fas fa-search icon-reflection"></i>
+          <span class="text-reflection">Search</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/admin/categories'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-folder-open"></i>
+          <span>Categories</span>
+          <i class="fas fa-folder-open icon-reflection"></i>
+          <span class="text-reflection">Categories</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/admin/properties'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-sliders-h"></i>
+          <span>Properties</span>
+          <i class="fas fa-sliders-h icon-reflection"></i>
+          <span class="text-reflection">Properties</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/admin/category-templates'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-layer-group"></i>
+          <span>Category Templates</span>
+          <i class="fas fa-layer-group icon-reflection"></i>
+          <span class="text-reflection">Category Templates</span>
+        </button>
+      </div>
+      <!-- USER navigation buttons -->
+    } @else {
+      <div class="flex-row">
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/search'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-search"></i>
+          <span>Search</span>
+          <i class="fas fa-search icon-reflection"></i>
+          <span class="text-reflection">Search</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/user/products'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-boxes-stacked"></i>
+          <span>Products</span>
+          <i class="fas fa-boxes-stacked icon-reflection"></i>
+          <span class="text-reflection">Products</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/user/transactions'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-handshake"></i>
+          <span>Transactions</span>
+          <i class="fas fa-handshake icon-reflection"></i>
+          <span class="text-reflection">Transactions</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/user/feedbacks'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-comment"></i>
+          <span>Feedbacks</span>
+          <i class="fas fa-comment icon-reflection"></i>
+          <span class="text-reflection">Feedbacks</span>
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [routerLink]="'/user/carts'"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          <span>Carts</span>
+          <i class="fas fa-shopping-cart icon-reflection"></i>
+          <span class="text-reflection">Carts</span>
+        </button>
+      </div>
+    }
+    <!-- User bar for authenticated -->
+    <div class="flex-row ml-auto">
+      <button
+        class="btn btn-red-sox-red btn-static"
+        type="button"
+        (click)="logout()"
+      >
+        <i class="fas fa-door-closed"></i>
+        <span>Logout</span>
+        <i class="fas fa-door-closed icon-reflection"></i>
+        <span class="text-reflection">Logout</span>
+      </button>
+      <div
+        class="btn-circle btn-forest-green"
+        [attr.data-profile]="userProfile | profileFullname"
+      >
+        <span>{{ userProfile | profileInitial }}</span>
+        <span class="text-reflection">{{ userProfile | profileInitial }}</span>
+      </div>
+    </div>
+  } @else {
+    <!-- User bar for unauthenticated -->
+    <div class="flex-row ml-auto">
+      <button
+        class="btn btn-forest-green btn-static"
+        type="button"
+        (click)="login()"
+      >
+        <i class="fas fa-door-open"></i>
+        <span>Login</span>
+        <i class="fas fa-door-open icon-reflection"></i>
+        <span class="text-reflection">Login</span>
+      </button>
+      <button
+        class="btn btn-forest-green btn-static"
+        type="button"
+        (click)="register()"
+      >
+        <i class="fas fa-user-edit"></i>
+        <span>Register</span>
+        <i class="fas fa-user-edit icon-reflection"></i>
+        <span class="text-reflection">Register</span>
+      </button>
+    </div>
+  }
+</div>

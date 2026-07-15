@@ -1,0 +1,69 @@
+<div class="flex-col p-half mt-half border-full-action">
+  <!-- Price and cancel button -->
+  <div class="flex-row align-end">
+    <label for="price">Price:</label>
+    <input
+      id="price"
+      type="text"
+      required
+      appTwoDecimalValidator
+      [(ngModel)]="price"
+    >
+    <div class="icon-info color-red-sox-red ml-auto align-self-center">
+      <i
+        class="fa-solid fa-circle-xmark"
+        [attr.data-content]="'Cancel variant creation form'"
+        (click)="cancel()"
+      ></i>
+    </div>
+  </div>
+  <hr>
+  <!-- Quantity -->
+  <div class="flex-row align-end">
+    <label for="quantity">Quantity:</label>
+    <input
+      id="quantity"
+      required
+      type="number"
+      min="0"
+      [(ngModel)]="quantity"
+    >
+  </div>
+  <!-- Properties -->
+  <div class="flex-col">
+    @for (property of categoryTemplate.properties; track property.id) {
+      @if (property.id !== undefined) {
+        <hr>
+        <label class="color-off-white" [for]="property.id">{{ formatPropertyName(property) }}</label>
+        <select
+          [id]="property.id"
+          [(ngModel)]="properties[property.id]"
+        >
+          <option [ngValue]="null">None</option>
+          @for (preset of property.presets; track preset.id) {
+            <option [ngValue]="preset.value">
+              <!-- Displays the unit conditionally -->
+              {{ formatPreset(property, preset) }}
+            </option>
+          }
+        </select>
+      }
+    }
+    <hr>
+  </div>
+  <!-- Change image -->
+  <app-file-input
+    [(filePreview)]="filePreview"
+  ></app-file-input>
+  <hr>
+  <!-- Create product variant button -->
+  <div>
+    <button
+      class="btn btn-dodgers-blue btn-static"
+      type="button"
+      [disabled]="!isRequestValid"
+      (click)="createProductVariant()"
+    >Create product variant
+    </button>
+  </div>
+</div>

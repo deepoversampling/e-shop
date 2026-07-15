@@ -1,0 +1,28 @@
+<app-menu ngSkipHydration></app-menu>
+<app-category
+  [(currentCategory)]="currentCategory"
+  [(selectedCategory)]="selectedCategory"
+></app-category>
+<hr>
+<app-product-search-options
+  [(productRequest)]="productRequest"
+></app-product-search-options>
+<hr>
+@if (isLeafCategory && hasCategoryTemplate) {
+  <app-filter
+    [selectedCategory]="selectedCategory"
+    [(filters)]="filters"
+  ></app-filter>
+  <hr>
+}
+<app-product-list
+  [(productResponse)]="productResponse"
+  [selectedCategory]="selectedCategory"
+  [productRequest]="productRequest"
+  [filters]="filters"
+  [page]="page"
+></app-product-list>
+<app-pagination-bar
+  [productResponse]="productResponse"
+  [(page)]="page"
+></app-pagination-bar>

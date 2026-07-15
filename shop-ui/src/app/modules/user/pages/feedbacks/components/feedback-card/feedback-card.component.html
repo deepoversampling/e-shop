@@ -1,0 +1,72 @@
+@for (item of cart().items; track item.id) {
+  <div class="flex-row item">
+    <!-- Image column -->
+    <div class="img-wrapper">
+      <img
+        [ngSrc]="getNgSrc(item)"
+        fill
+        alt="Product image"
+        appImgErrorHandler
+      />
+    </div>
+    <!-- Description and feedback column -->
+    <div class="flex-col pt-half pb-half flex-fill">
+      <h3>{{ getTitle(item) }}</h3>
+      <p>{{ item.productSnapshot?.description }}</p>
+      <ul>
+        @for (property of getItemProperties(item); track property) {
+          <li>
+            <span>{{ property }}</span>
+          </li>
+        }
+      </ul>
+      @if (!hasFeedback(item)) {
+        <div class="flex-col">
+          <textarea
+            [formControl]="getComment(item)"
+            rows="5"
+            (input)="updateFeedbackResizeTrigger(item)"
+            (blur)="updateFeedbackResizeTrigger(item)"
+          ></textarea>
+          @if (getComment(item).invalid && (getComment(item).dirty || getComment(item).touched)) {
+            @if (getComment(item).hasError('required')) {
+              <div class="color-off-white">
+                Comment is required
+              </div>
+            }
+            @if (getComment(item).hasError('maxlength')) {
+              <div class="color-off-white">
+                Total length of a comment cannot exceed 255 characters
+              </div>
+            }
+          }
+        </div>
+        <!-- <div> that wraps app-rating-submit can reset note by setting reset note trigger to true -->
+        <div class="flex-row align-center" (click)="resetNote(item)">
+          <app-rating-submit
+            [note]="getNote(item)"
+            (noteChange)="setNote($event, item)"
+            [resetNoteTrigger]="getResetNoteTrigger(item)"
+            (resetNoteTriggerChange)="setResetNoteTrigger($event, item)"
+          ></app-rating-submit>
+          <button
+            class="btn btn-dodgers-blue btn-static"
+            type="button"
+            [disabled]="!hasComment(item)"
+            (click)="addFeedback(item)"
+          >Add comment
+          </button>
+        </div>
+      } @else {
+        <div class="flex-col">
+          <app-rating [rating]="item.note!"></app-rating>
+          <p>{{ item.comment }}</p>
+        </div>
+      }
+    </div>
+  </div>
+  <!-- Item separator -->
+  @if (!$last) {
+    <hr>
+  }
+}

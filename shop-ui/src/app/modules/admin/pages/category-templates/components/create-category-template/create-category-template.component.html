@@ -1,0 +1,66 @@
+<div class="flex-col p-half border-full-action item-card">
+  <!-- New property and cancel button -->
+  <div class="flex-row">
+    <!-- Properties -->
+    <div class="flex-row align-end">
+      <label class="color-off-white" for="property">Add property:</label>
+      <select
+        id="property"
+        [(ngModel)]="property"
+      >
+        <option [ngValue]="null">None</option>
+        @for (property of allProperties; track property.id) {
+          <option [ngValue]="property">
+            {{ property.name }}
+          </option>
+        }
+      </select>
+      <!-- Add property button -->
+      <button
+        class="btn btn-forest-green btn-static btn-action"
+        [attr.data-content]="'Add property'"
+        type="button"
+        [disabled]="!hasProperty || hasProperty && propertyAlreadyExists"
+        (click)="addProperty()"
+      >
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <div class="icon-info color-red-sox-red ml-auto align-self-center">
+      <i
+        class="fa-solid fa-circle-xmark"
+        [attr.data-content]="'Clear category template creation form'"
+        (click)="cancel()"
+      ></i>
+    </div>
+  </div>
+  <hr>
+  @if (hasProperties) {
+    <!-- Properties -->
+    <fieldset>
+      <legend class="color-off-white">Current properties:</legend>
+      <div
+        id="properties"
+        class="flex-row flex-wrap"
+      >
+        @for (property of properties; track property.id) {
+          <app-property
+            [property]="property"
+            (propertyToRemove)="removeProperty($event)"
+          ></app-property>
+        }
+      </div>
+    </fieldset>
+    <hr>
+  }
+  <!-- Create category template button -->
+  <div>
+    <button
+      class="btn btn-dodgers-blue btn-static"
+      type="button"
+      [disabled]="!hasProperties"
+      (click)="createCategoryTemplate()"
+    >Create category template
+    </button>
+  </div>
+</div>

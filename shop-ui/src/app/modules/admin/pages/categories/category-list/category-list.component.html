@@ -1,0 +1,368 @@
+<app-menu></app-menu>
+
+@if (isReady) {
+  <div class="flex-row mt-menu">
+    <div class="flex-col">
+      <!-- Category creation form -->
+      <div
+        class="flex-col p-half border-full-action"
+        (click)="resetCategoryDraftIcon(selectedCategory)"
+        (dblclick)="resetCategoryIcon(selectedCategory)"
+      >
+        <div class="flex-row align-end">
+          <label class="color-off-white" for="name">Name:</label>
+          <input
+            class="flex-fill"
+            id="name"
+            type="text"
+            [ngModel]="getCategoryDraftName(selectedCategory)"
+            (ngModelChange)="setCategoryDraftName(selectedCategory, $event)"
+            (click)="$event.stopPropagation()"
+          />
+        </div>
+        <div class="grid">
+          @for (icon of icons; track icon) {
+            <div
+              class="icon-info square color-off-white grid-item"
+              [class.isIcon]="isIcon(icon)"
+              [class.isDraftIcon]="isDraftIcon(icon)"
+              (click)="setCategoryDraftIcon(selectedCategory, icon); $event.stopPropagation()"
+              (dblclick)="setCategoryIcon(selectedCategory, icon); $event.stopPropagation()"
+            >
+              <i
+                [class]="'fas fa-' + icon"
+                [attr.data-content]="icon"
+              ></i>
+            </div>
+          }
+        </div>
+      </div>
+      <!-- Legend of category creation form -->
+      <div class="flex-col">
+        <div class="flex-row">
+          <div
+            class="icon-info color-off-white grid-item isDraftIcon"
+          >
+            <i
+              [class]="'fas fa-circle'"
+              [attr.data-content]="'icon'"
+            ></i>
+          </div>
+          <p class="color-off-white">- icon of the new category (click)</p>
+        </div>
+        @if (!isEmpty) {
+          <div class="flex-row">
+            <div
+              class="icon-info color-off-white grid-item isIcon"
+            >
+              <i
+                [class]="'fas fa-circle'"
+                [attr.data-content]="'icon'"
+              ></i>
+            </div>
+            <p class="color-off-white">- icon of the current category (double click)</p>
+          </div>
+        }
+      </div>
+    </div>
+    <!-- Legend of the categories -->
+    <div class="flex-col">
+      @if (!isEmpty) {
+        <div class="flex-row">
+          <div
+            class="icon-info color-red-sox-red"
+          >
+            <i
+              [class]="'fa-solid fa-minus-circle'"
+              [attr.data-content]="'Remove category'"
+            ></i>
+          </div>
+          <p class="color-off-white">- removes category</p>
+        </div>
+        <div class="flex-row">
+          <div
+            class="icon-info color-dodgers-blue"
+          >
+            <i
+              [class]="'fa-solid fa-shapes'"
+              [attr.data-content]="'Change icon of the category'"
+            ></i>
+          </div>
+          <p class="color-off-white">- changes icon of the category</p>
+        </div>
+        <div class="flex-row">
+          <div
+            class="icon-info color-dodgers-blue"
+          >
+            <i
+              [class]="'fa-solid fa-x'"
+              [attr.data-content]="'Remove icon of the category'"
+            ></i>
+          </div>
+          <p class="color-off-white">- removes icon of the category</p>
+        </div>
+      }
+      <div class="flex-row">
+        <div
+          class="icon-info color-forest-green"
+        >
+          <i
+            [class]="'fa-solid fa-plus-circle'"
+            [attr.data-content]="'Create category'"
+          ></i>
+        </div>
+        <p class="color-off-white">- creates category</p>
+      </div>
+    </div>
+  @if (isEmpty) {
+      <!-- Empty categories -->
+      <div class="flex-col flex-fill align-center">
+        <button
+          class="btn-tile"
+          type="button"
+          [class.active]="true"
+          [style.border]="getBorder(currentCategory)"
+          [style.box-shadow]="getBoxShadow(currentCategory)"
+        >
+        </button>
+        <!-- Action icons -->
+        @if (hasCategoryDraftName(currentCategory)) {
+          <div class="icon-info color-forest-green">
+            <i
+              class="fa-solid fa-plus-circle"
+              [attr.data-content]="'Create category'"
+              (click)="createCategory(currentCategory)"
+            ></i>
+          </div>
+        }
+      </div>
+  } @else {
+      <!-- Categories -->
+      <div class="flex-col flex-fill gap-3">
+        <!-- Top category -->
+        <div class="flex-row-center-x">
+          <div class="flex-col align-center">
+            <button
+              class="btn-tile"
+              type="button"
+              [class.active]="isSelected(currentCategory)"
+              [class.up]="hasParent(currentCategory)"
+              [style.--btn-tile-color]="currentCategory.color"
+              [style.color]="getColor(currentCategory)"
+              [style.border]="getBorder(currentCategory)"
+              [style.box-shadow]="getBoxShadow(currentCategory)"
+              (click)="onClick(currentCategory)"
+              [attr.data-id]="currentCategory.id"
+              #category
+            >
+              @if (currentCategory.icon) {
+                <i
+                  [class]="currentCategory.icon"
+                  [style.color]="getColor(currentCategory)"
+                ></i>
+              }
+              <span>{{ currentCategory.name }}</span>
+            </button>
+            <!-- Action icons -->
+            <div class="flex-row">
+              @if (!hasChildren(currentCategory)) {
+                <div class="icon-info icon-info-no-hint color-red-sox-red">
+                  <i
+                    class="fa-solid fa-minus-circle"
+                    [attr.data-content]="'Remove category'"
+                    (click)="removeCategory(currentCategory)"
+                  ></i>
+                </div>
+              }
+              @if (hasCategoryIcon(currentCategory)) {
+                <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                  <i
+                    class="fa-solid fa-shapes"
+                    [attr.data-content]="'Change icon of the category'"
+                    (click)="updateCategoryIcon(currentCategory)"
+                  ></i>
+                </div>
+              }
+              @if (currentCategory.icon) {
+                <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                  <i
+                    class="fa-solid fa-x"
+                    [attr.data-content]="'Remove icon of the category'"
+                    (click)="removeCategoryIcon(currentCategory)"
+                  ></i>
+                </div>
+              }
+              @if (hasCategoryDraftName(currentCategory)) {
+                <div class="icon-info icon-info-no-hint color-forest-green">
+                  <i
+                    class="fa-solid fa-plus-circle"
+                    [attr.data-content]="'Create category'"
+                    (click)="createCategory(currentCategory)"
+                  ></i>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+        <!-- Middle categories -->
+        <div class="flex-row-center-x align-start">
+          @for (childCategory of currentCategory.subcategories; track childCategory.id) {
+            <div class="flex-col align-center">
+              <button
+                class="btn-tile"
+                type="button"
+                [class.active]="isSelected(childCategory)"
+                [style.color]="getColor(childCategory)"
+                [style.border]="getBorder(childCategory)"
+                [style.box-shadow]="getBoxShadow(childCategory)"
+                (click)="onClick(childCategory)"
+                [attr.data-id]="childCategory.id"
+                #category
+              >
+                @if (childCategory.icon) {
+                  <i
+                    [class]="childCategory.icon"
+                    [style.color]="getColor(childCategory)"
+                  ></i>
+                }
+                <span>{{ childCategory.name }}</span>
+              </button>
+              <svg class="line">
+                <path
+                  [attr.d]="getPath(childCategory)"
+                  stroke="black"
+                  stroke-width="3"
+                  fill="transparent"
+                />
+              </svg>
+              <!-- Action icons -->
+              <div class="flex-row">
+                @if (!hasChildren(childCategory)) {
+                  <div
+                    class="icon-info icon-info-no-hint color-red-sox-red"
+                    [class.isReady]="true"
+                  >
+                    <i
+                      class="fa-solid fa-minus-circle"
+                      [attr.data-content]="'Remove category'"
+                      (click)="removeCategory(childCategory)"
+                    ></i>
+                  </div>
+                }
+                @if (hasCategoryIcon(childCategory)) {
+                  <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                    <i
+                      class="fa-solid fa-shapes"
+                      [attr.data-content]="'Change icon of the category'"
+                      (click)="updateCategoryIcon(childCategory)"
+                    ></i>
+                  </div>
+                }
+                @if (childCategory.icon) {
+                  <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                    <i
+                      class="fa-solid fa-x"
+                      [attr.data-content]="'Remove icon of the category'"
+                      (click)="removeCategoryIcon(childCategory)"
+                    ></i>
+                  </div>
+                }
+                @if (hasCategoryDraftName(childCategory)) {
+                  <div class="icon-info icon-info-no-hint color-forest-green">
+                    <i
+                      class="fa-solid fa-plus-circle"
+                      [attr.data-content]="'Create category'"
+                      (click)="createCategory(childCategory)"
+                    ></i>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+        <!-- Bottom categories -->
+        <div class="flex-row-center-x align-start">
+          @for (childCategory of currentCategory.subcategories; track childCategory.id) {
+            @for (grandChildCategory of childCategory.subcategories; track grandChildCategory.id) {
+              <div class="flex-col align-center">
+                <button
+                  class="btn-tile"
+                  type="button"
+                  [class.active]="isSelected(grandChildCategory)"
+                  [class.down]="hasChildren(grandChildCategory)"
+                  [style.--btn-tile-color]="grandChildCategory.color"
+                  [style.color]="getColor(grandChildCategory)"
+                  [style.border]="getBorder(grandChildCategory)"
+                  [style.box-shadow]="getBoxShadow(grandChildCategory)"
+                  (click)="onClick(grandChildCategory)"
+                  [attr.data-id]="grandChildCategory.id"
+                  #category
+                >
+                  @if (grandChildCategory.icon) {
+                    <i
+                      [class]="grandChildCategory.icon"
+                      [style.color]="getColor(grandChildCategory)"
+                    ></i>
+                  }
+                  <span>{{ grandChildCategory.name }}</span>
+                </button>
+                <svg class="line">
+                  <path
+                    [attr.d]="getPath(grandChildCategory)"
+                    stroke="black"
+                    stroke-width="3"
+                    fill="transparent"
+                  />
+                </svg>
+                <!-- Action icons -->
+                <div class="flex-row">
+                  @if (!hasChildren(grandChildCategory)) {
+                    <div
+                      class="icon-info icon-info-no-hint color-red-sox-red"
+                      [class.isReady]="true"
+                    >
+                      <i
+                        class="fa-solid fa-minus-circle"
+                        [attr.data-content]="'Remove category'"
+                        (click)="removeCategory(grandChildCategory)"
+                      ></i>
+                    </div>
+                  }
+                  @if (hasCategoryIcon(grandChildCategory)) {
+                    <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                      <i
+                        class="fa-solid fa-shapes"
+                        [attr.data-content]="'Change icon of the category'"
+                        (click)="updateCategoryIcon(grandChildCategory)"
+                      ></i>
+                    </div>
+                  }
+                  @if (grandChildCategory.icon) {
+                    <div class="icon-info icon-info-no-hint color-dodgers-blue">
+                      <i
+                        class="fa-solid fa-x"
+                        [attr.data-content]="'Remove icon of the category'"
+                        (click)="removeCategoryIcon(grandChildCategory)"
+                      ></i>
+                    </div>
+                  }
+                  @if (hasCategoryDraftName(grandChildCategory)) {
+                    <div class="icon-info icon-info-no-hint color-forest-green">
+                      <i
+                        class="fa-solid fa-plus-circle"
+                        [attr.data-content]="'Create category'"
+                        (click)="createCategory(grandChildCategory)"
+                      ></i>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+  }
+  </div>
+}
+
+<!-- data-id is custom data attribute used by updateDOMRect(btn: HTMLButtonElement) method to derive id of the passed category button -->

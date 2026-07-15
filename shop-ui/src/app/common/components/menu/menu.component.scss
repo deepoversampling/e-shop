@@ -1,0 +1,97 @@
+@use '../../../../styles' as *;
+
+$btn-colors: (
+  forest-green: $color-forest-green,
+  red-sox-red: $color-red-sox-red,
+);
+
+// Static button reflection
+@each $name, $color in $btn-colors {
+  .btn-static.btn-#{$name} {
+    &::before {
+      background-color: $color;
+    }
+
+    &:hover::before {
+      box-shadow: 0 0 10px $color;
+    }
+  }
+}
+
+@mixin reflection($shape: rect) {
+  content: '';
+  position: absolute;
+  inset: 0;
+  filter: blur(1px) opacity(20%);
+  transform: translateY(100%) scaleY(-1);
+  pointer-events: none;
+  transition: all $animation-duration ease, outline 0s;
+
+  @if $shape == circle {
+    border-radius: 50%;
+    background-color: $color-forest-green;
+  } @else if $shape == icon {
+    padding: 0.5rem;
+    pointer-events: none;
+  } @else if $shape == text {
+    padding: 0.5rem;
+    text-align: end;
+  } @else if $shape == text-circle {
+    padding: 0.5rem;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+  } @else {
+    background-color: $color-dodger-blue;
+    border-radius: $btn-border-radius;
+  }
+}
+
+.btn {
+  &::before {
+    @include reflection();
+  }
+
+  &.active::before {
+    background: radial-gradient(ellipse at center, $color-dodger-blue, $color-dodgers-blue);
+    box-shadow: 0 0 10px $color-dodgers-blue;
+  }
+
+  &:not(.active) {
+    &:not(.btn-static):hover::before {
+      background: radial-gradient(ellipse at center, $color-dodger-blue, $color-dodgers-blue);
+    }
+  }
+
+  &:focus-visible::before {
+    outline: 2px solid white;
+  }
+
+  & > .icon-reflection {
+    @include reflection(icon);
+  }
+
+  & > .text-reflection {
+    @include reflection(text);
+  }
+}
+
+.btn-circle {
+  &::before {
+    @include reflection(circle);
+  }
+
+  &:hover::before {
+    box-shadow: 0 0 10px $color-forest-green;
+  }
+
+  &:hover::after {
+    @include hint(attr(data-profile), translateX(-50%) translateY(50%));
+    bottom: -50%;
+  }
+
+  & > .text-reflection {
+    @include reflection(text-circle);
+  }
+}

@@ -1,0 +1,70 @@
+<div class="flex-row mt-half mb-half gap-one flex-wrap">
+  <!-- Size -->
+  <div class="flex-row align-end">
+    <label class="color-off-white" for="pageSize">Page Size:</label>
+    <input
+      id="pageSize"
+      type="number"
+      min="1"
+      step="1"
+      [(ngModel)]="productRequest().size"
+      (ngModelChange)="onProductRequestChange()"
+    />
+  </div>
+  <!-- Sort -->
+  <fieldset class="flex-row">
+    <legend class="color-off-white">Sort:</legend>
+    <select
+      id="sortBy"
+      [(ngModel)]="productRequest().sortBy"
+      (ngModelChange)="onProductRequestChange()"
+    >
+      <option [ngValue]="null">None</option>
+      @for (option of sortByOptions; track option.value) {
+        <option [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      }
+    </select>
+    <select
+      id="sortDirection"
+      [(ngModel)]="productRequest().sortDirection"
+      (ngModelChange)="onProductRequestChange()"
+    >
+      <option [ngValue]="null">None</option>
+      @for (option of sortDirectionOptions; track option.value) {
+        <option [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      }
+    </select>
+  </fieldset>
+  <!-- Filters -->
+  <fieldset class="flex-row align-end">
+    <legend class="color-off-white">Filters:</legend>
+    <label class="color-off-white" for="nameSearch">Name:</label>
+    <input
+      id="nameSearch"
+      type="text"
+      [(ngModel)]="productRequest().name"
+      (ngModelChange)="onProductRequestChange()"
+    />
+    <label class="color-off-white" for="quantitySearch">Quantity:</label>
+    <input
+      id="quantitySearch"
+      type="number"
+      min="1"
+      step="1"
+      [(ngModel)]="productRequest().quantity"
+      (ngModelChange)="onProductRequestChange()"
+    />
+    <label class="color-off-white" for="priceSearch">Price:</label>
+    <input
+      id="priceSearch"
+      type="text"
+      appTwoDecimalValidator
+      [(ngModel)]="productRequest().price"
+      (ngModelChange)="onProductRequestChange()"
+    />
+  </fieldset>
+</div>

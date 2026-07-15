@@ -1,0 +1,14 @@
+<div class="flex-row">
+  @for (index of fullStars; track index) {
+    <i class="fas fa-star color-gold"></i>
+  }
+  @if (hasHalfStar) {
+    <div class="star-pair">
+      <i class="fas fa-star-half color-gold clip-half"></i>
+      <i class="fas fa-star-half color-off-white clip-half mirror"></i>
+    </div>
+  }
+  @for (index of emptyStars; track index) {
+    <i class="fas fa-star color-off-white"></i>
+  }
+</div>

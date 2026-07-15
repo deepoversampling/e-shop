@@ -1,0 +1,60 @@
+@use '../../../../../../styles' as *;
+
+.icon-info {
+  cursor: pointer;
+
+  &.isDraftIcon {
+    color: $color-mcdonalds-yellow;
+  }
+
+  &.isIcon {
+    border: 2px dashed $color-mcdonalds-yellow;
+    border-radius: 0.25rem;
+  }
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  backdrop-filter: brightness(85%);
+}
+
+.line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.gap-3 {
+  gap: 3rem;
+}
+
+.icon-info-no-hint {
+  & i:hover::after {
+    display: none;
+  }
+}
+
+.btn-tile {
+  &.active {
+    transform: scale(1.15);
+  }
+
+  &:not(.active):hover {
+    transform: scale(1.15);
+  }
+}

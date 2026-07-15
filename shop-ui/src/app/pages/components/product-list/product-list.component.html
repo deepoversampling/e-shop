@@ -1,0 +1,7 @@
+<div class="grid mt-one">
+  @for (product of productResponse().content; track product.id) {
+    <app-product-card
+      [product]="product"
+    ></app-product-card>
+  }
+</div>

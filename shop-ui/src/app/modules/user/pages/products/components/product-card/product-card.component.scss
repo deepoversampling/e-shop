@@ -1,0 +1,19 @@
+@use '../../../../../../../styles' as *;
+
+input[type="text"] {
+  width: 3rem;
+}
+
+.btn-action {
+  background-color: #0000;
+
+  &:hover::after {
+    @include hint(attr(data-content), translateX(-50%) translateY($btn-height));
+  }
+}
+
+.absolute { // Absolutely positioned at bottom right corner
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

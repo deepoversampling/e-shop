@@ -1,0 +1,13 @@
+<button
+  class="btn btn-static btn-forest-green btn-preset"
+  type="button"
+>
+  {{ preset() }}
+  <div class="icon-info color-red-sox-red align-self-center ml-half">
+    <i
+      class="fa-solid fa-circle-xmark"
+      [attr.data-content]="'Remove preset'"
+      (click)="cancel(); $event.stopPropagation()"
+    ></i>
+  </div>
+</button>

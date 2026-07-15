@@ -1,0 +1,85 @@
+@use '../../../../styles' as *;
+
+.pagination-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  bottom: 0.5rem;
+  width: 100%;
+  pointer-events: none;
+}
+
+.page-container {
+  position: relative;
+  pointer-events: auto;
+
+  &.disabled {
+    visibility: hidden; // Don't use 'display: none' here to not disrupt horizontal location of the buttons
+    pointer-events: none;
+  }
+}
+
+.page-background {
+  position: absolute;
+  inset: 0; // Equivalent to top 0, bottom 0, left 0, right 0 (take all available space from the parent), important because element is empty itself
+  backdrop-filter: blur(1px);
+  border-radius: 0.5rem;
+}
+
+.page {
+  @include btn-base($border-radius: 0.5rem, $color: black, $background-color: color-mix(in lab, transparent 50%, $color-light-steel-blue));
+  aspect-ratio: 1 / 1;
+
+  &.active {
+    scale: 1.1;
+    background-color: color-mix(in lab, transparent 25%, $color-light-steel-blue);
+  }
+
+  &:not(.active):hover {
+    background-color: color-mix(in lab, transparent 25%, $color-light-steel-blue);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.page.active::before,
+.page.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400%;
+  z-index: -1;
+  animation: rainbow 20s linear infinite;
+}
+
+// Rainbow border
+.page.active::before {
+  mask:
+    linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000) padding-box;
+  // The non-overlapping regions of source and destination are combined
+  // This means common area (content box) is removed
+  mask-composite: exclude;
+  padding: 0.2rem;
+  inset: -0.2rem;
+}
+
+// Rainbow glow
+.page.active::after {
+  filter: blur(16px);
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}

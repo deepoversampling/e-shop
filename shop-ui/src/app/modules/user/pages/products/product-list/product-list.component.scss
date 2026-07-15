@@ -1,0 +1,23 @@
+@use '../../../../../../styles' as *;
+
+h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+p {
+  font-family: "Georgia", sans-serif;
+  height: auto;
+  line-height: 1.5rem;
+  overflow-x: auto;
+  scrollbar-color: grey transparent;
+}
+
+.btn-action {
+  background-color: #0000;
+
+  &:hover::after {
+    @include hint(attr(data-content), translateX(30%) translateY(-$btn-height));
+  }
+}

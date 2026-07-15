@@ -1,0 +1,30 @@
+<!-- #fileUpload is template reference variable -->
+<input
+  class="file-input"
+  type="file"
+  (input)="setImage($event)"
+  #fileUpload
+>
+<button
+  class="btn btn-static btn-file"
+  type="button"
+  (click)="fileUpload.click()"
+>
+  {{ getInputImageName() ?? 'No file uploaded yet.' }}
+  @if (hasFile) {
+    <div class="btn-circle btn-off-white ml-half mr-one">
+      <img class="thumbnail" [src]="getInputImageUrl()">
+    </div>
+    <div class="icon-info color-red-sox-red align-self-center">
+      <i
+        class="fa-solid fa-circle-xmark"
+        [attr.data-content]="'Remove image'"
+        (click)="cancel(); $event.stopPropagation()"
+      ></i>
+    </div>
+  } @else {
+    <div class="btn-circle btn-dodgers-blue ml-half">
+      <i class="fa fa-image"></i>
+    </div>
+  }
+</button>
