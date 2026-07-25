@@ -41,7 +41,7 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v7
         with:
-          context: shop
+          context: eshop
           file: docker/backend/Dockerfile
           push: true
           platforms: linux/amd64
