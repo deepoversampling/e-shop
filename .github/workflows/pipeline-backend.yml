@@ -22,7 +22,7 @@ jobs:
 
       - name: Build backend
         run: |
-          cd eshop
+          cd e-shop/eshop
           chmod +x mvnw
           ./mvnw clean package
 
