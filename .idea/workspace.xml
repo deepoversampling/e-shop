@@ -5,116 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docker-compose.local.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/github/workflows/pipeline-backend.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/cart-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-draft-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-draft-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/category-template-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/checkout-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/feedback-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/file-preview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/item-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/page-response-feedback-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/page-response-product-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-draft-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-property-value-link-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/product-variant-snapshot.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-draft-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-preset-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/property-response-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/quantity-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-icon-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-price-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/update-quantity-request-dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-draft-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-ui/models_backup/variant-index-cache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop/src/main/resources/application-docker.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop/src/main/resources/application-prod.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.docker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keycloak/export/e-shop.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/common/helpers/currency/currency-formatter.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/common/helpers/currency/currency-formatter.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/common/utils/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/common/utils/utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/categories/category-list/category-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/categories/category-list/category-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/category-templates/components/create-category-template/create-category-template.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/category-templates/components/create-category-template/create-category-template.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/properties/components/create-property/create-property.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/admin/pages/properties/components/create-property/create-property.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/feedbacks/components/feedback-card/feedback-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/feedbacks/components/feedback-card/feedback-card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product-variant/create-product-variant.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product-variant/create-product-variant.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product/create-product.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/create-product/create-product.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/product-card/product-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/modules/user/pages/products/components/product-card/product-card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-card/product-card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-list/product-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/pages/components/product-list/product-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/admin/properties-init/properties-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/admin/properties-init/properties-init.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/fn/category-template-controller/get-category-template-by-category-id.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/fn/category-template-controller/get-category-template-by-category-id.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/resources-init/resources-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/resources-init/resources-init.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/search-init/search-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/search-init/search-init.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/services/cart-controller.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/services/cart-controller.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/services/category-template-controller.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/services/category-template-controller.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/user/carts-init/carts-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/user/carts-init/carts-init.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/user/products-init/products-init.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/user/products-init/products-init.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/main.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/main.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/openapi/openapi.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/openapi/openapi.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/src/server.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.app.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop-ui/tsconfig.spec.json" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/tsconfig.spec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shop/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/aws/S3ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/aws/S3ImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/ProductVariantSnapshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/cart/item/ProductVariantSnapshot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/category_template/CategoryTemplateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/sort/SortUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/sort/SortUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/stripe/LineItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/stripe/LineItemBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/utils/UriUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/common/utils/UriUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/BeansConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/BeansConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/aws/AwsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/config/aws/AwsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/exception/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/exception/handler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/feedback/FeedbackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/inteceptor/UserSynchronizerFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/inteceptor/UserSynchronizerFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/WebhookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/payment/WebhookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/product/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/property/PropertyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/property/PropertyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/KeycloakJwtAuthenticationConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/KeycloakJwtAuthenticationConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/security/Security.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/user/UserSynchronizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/java/com/javuar/shop/user/UserSynchronizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shop/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsonSchemas.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/github/workflows/pipeline-backend.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +73,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.json.schema&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\prest\\IdeaProjects\\e-shop\\shop-ui\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -306,11 +200,21 @@
       <workItem from="1783984553183" duration="965000" />
       <workItem from="1783985887944" duration="18000" />
       <workItem from="1783986692474" duration="197000" />
-      <workItem from="1784063369676" duration="308000" />
+      <workItem from="1784063369676" duration="3395000" />
+      <workItem from="1784140852159" duration="809000" />
+      <workItem from="1784242518402" duration="3684000" />
+      <workItem from="1784328964882" duration="2163000" />
+      <workItem from="1784331173089" duration="807000" />
+      <workItem from="1784847093220" duration="27000" />
+      <workItem from="1784932168620" duration="2609000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

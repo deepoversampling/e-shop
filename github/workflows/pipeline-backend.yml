@@ -1,6 +1,0 @@
-#name: e-shop Backend API Pipeline
-#
-#on:
-#  push:
-#    branches:
-#      -
