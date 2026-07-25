@@ -22,14 +22,14 @@ jobs:
 
       - name: Build backend
         run: |
-          cd e-shop/eshop
+          cd shop
           chmod +x mvnw
           ./mvnw clean package
 
       - name: Extract project version
         id: extract_version
         run: |
-          cd eshop
+          cd shop
           echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
 
       - name: Login to DockerHub
@@ -41,13 +41,13 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v7
         with:
-          context: eshop
+          context: shop
           file: docker/backend/Dockerfile
           push: true
           platforms: linux/amd64
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/eshop-api:${{ steps.extract_version.outputs.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/eshop-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/shop-api:${{ steps.extract_version.outputs.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/shop-api:latest
 
   deploy:
     name: Deploy Backend
