@@ -8,6 +8,15 @@ on:
 jobs:
   build-image:
     name: Build backend Docker image
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: shop_db
     runs-on: ubuntu-latest
 
     steps:
