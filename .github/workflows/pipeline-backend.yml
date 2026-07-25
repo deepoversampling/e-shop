@@ -20,10 +20,10 @@ jobs:
           java-version: 17
           distribution: 'corretto'
 
-      - name: Build project backend
+      - name: Build backend
         run: |
-          cd shop
-          chmod +x shop/mvnw
+          cd eshop
+          chmod +x mvnw
           ./mvnw clean package
 
       - name: Extract project version
