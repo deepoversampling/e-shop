@@ -68,9 +68,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create PEM Key File
-        run: echo "${{ secrets.PEM_KEY }}"
-
-      - name: Create PEM Key File
         run: echo "${{ secrets.PEM_KEY }}" > /tmp/pem_key.pem
 
       - name: Fix PEM permissions
@@ -78,7 +75,7 @@ jobs:
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@13.223.46.61:~/ci-cd/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@172.31.39.102:~/ci-cd/docker-compose.prod.yml
 
       - name: Deploy on EC2
         run: |
