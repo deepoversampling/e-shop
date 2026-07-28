@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +62,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/prest/IdeaProjects/e-shop/shop-ui/src/app/services/models&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/prest/IdeaProjects/e-shop&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -82,11 +83,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\prest\IdeaProjects\e-shop" />
       <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\src\app\services\models" />
       <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui" />
       <recent name="C:\Users\prest\IdeaProjects\e-shop\shop\src\main\resources" />
       <recent name="C:\Users\prest\IdeaProjects\e-shop\shop-ui\old angular json" />
-      <recent name="C:\Users\prest\IdeaProjects\e-shop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\prest\IdeaProjects\e-shop" />
@@ -205,6 +206,8 @@
       <workItem from="1784847093220" duration="27000" />
       <workItem from="1784932168620" duration="7583000" />
       <workItem from="1785000276111" duration="192000" />
+      <workItem from="1785192133947" duration="3827000" />
+      <workItem from="1785233576439" duration="7049000" />
     </task>
     <servers />
   </component>

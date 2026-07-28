@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - shop/**
+      - docker/backend/**
+      - docker-compose.prod.yml
+      - .github/workflows/pipeline-backend.yml
 
 jobs:
   build-image:
@@ -75,7 +80,7 @@ jobs:
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@172.31.39.102:~/ci-cd/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@98.93.190.140:~/ci-cd/docker-compose.prod.yml
 
       - name: Deploy on EC2
         run: |
