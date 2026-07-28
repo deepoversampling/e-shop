@@ -80,7 +80,7 @@ jobs:
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@98.93.190.140:~/ci-cd/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@172.31.24.255:~/ci-cd/docker-compose.prod.yml
 
       - name: Deploy on EC2
         run: |
