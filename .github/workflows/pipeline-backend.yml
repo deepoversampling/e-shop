@@ -89,7 +89,7 @@ jobs:
       - name: Deploy on EC2
         run: |
           scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem << 'EOF'
-          cd ~/ci-cd
+          cd ~/prod
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d
           EOF
