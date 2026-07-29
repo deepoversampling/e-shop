@@ -80,17 +80,16 @@ jobs:
 
       - name: Create deployment folder on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 "mkdir -p ~/ci-cd"
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 "mkdir -p ~/prod"
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@98.93.190.140:~/ci-cd/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@98.93.190.140:~/prod/docker-compose.prod.yml
 
       - name: Deploy on EC2
         run: |
           scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem << 'EOF'
           cd ~/ci-cd
-          
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d
           EOF
