@@ -88,7 +88,7 @@ jobs:
 
       - name: Upload .env to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 "echo \"${{ secrets.ENV_FILE }}"\ > ~/prod/.env"
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 "echo "${{ secrets.ENV_FILE }}" > ~/prod/.env"
 
       - name: Deploy on EC2
         run: |
