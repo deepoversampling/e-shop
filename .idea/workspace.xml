@@ -78,6 +78,9 @@
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
       &quot;postgresql&quot;
+    ],
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;TEXT&quot;
     ]
   }
 }</component>
@@ -209,7 +212,8 @@
       <workItem from="1785192133947" duration="3827000" />
       <workItem from="1785233576439" duration="12884000" />
       <workItem from="1785361749578" duration="6537000" />
-      <workItem from="1785776312293" duration="1384000" />
+      <workItem from="1785776312293" duration="4656000" />
+      <workItem from="1785879386735" duration="988000" />
     </task>
     <servers />
   </component>

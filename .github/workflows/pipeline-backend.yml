@@ -60,8 +60,8 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/shop-api:${{ steps.extract_version.outputs.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/shop-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/eshop-api:${{ steps.extract_version.outputs.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/eshop-api:latest
 
   deploy:
     name: Deploy Backend
@@ -80,24 +80,22 @@ jobs:
 
       - name: Create deployment folder on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 "mkdir -p ~/prod"
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@44.220.159.217 \
+          "mkdir -p /home/ec2-user/prod"
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@98.93.190.140:~/prod/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@44.220.159.217:/home/ec2-user/prod/docker-compose.prod.yml
 
       - name: Upload .env to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 \
-          "echo '${{ secrets.ENV_FILE }}' > /home/ec2-user/prod/.env"
+          echo "${{ secrets.ENV_FILE }}" > /tmp/envfile.tmp
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem /tmp/envfile.tmp ec2-user@44.220.159.217:/home/ec2-user/prod/.env
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@98.93.190.140 << 'EOF'
-          cd ~/prod
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@44.220.159.217 << 'EOF'
+          cd /home/ec2-user/prod
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d
           EOF
-
-#             docker-compose pull
-#            docker-compose up -d
