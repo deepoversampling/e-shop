@@ -80,25 +80,25 @@ jobs:
 
       - name: Create deployment folder on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@44.220.159.217 \
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@3.93.196.247 \
           "mkdir -p /home/ec2-user/prod"
           
       - name: Copy docker-compose to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@44.220.159.217:/home/ec2-user/prod/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@3.93.196.247:/home/ec2-user/prod/docker-compose.prod.yml
 
       - name: Copy nginx.conf to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem nginx.conf ec2-user@44.220.159.217:/home/ec2-user/prod/nginx.conf
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem nginx.conf ec2-user@3.93.196.247:/home/ec2-user/prod/nginx.conf
 
       - name: Upload .env to EC2
         run: |
           echo "${{ secrets.ENV_FILE }}" > /tmp/envfile.tmp
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem /tmp/envfile.tmp ec2-user@44.220.159.217:/home/ec2-user/prod/.env
+          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem /tmp/envfile.tmp ec2-user@3.93.196.247:/home/ec2-user/prod/.env
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@44.220.159.217 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@3.93.196.247 << 'EOF'
           cd /home/ec2-user/prod
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d

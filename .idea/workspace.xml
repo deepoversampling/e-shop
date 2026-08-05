@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +213,7 @@
       <workItem from="1785361749578" duration="6537000" />
       <workItem from="1785776312293" duration="4656000" />
       <workItem from="1785879386735" duration="6478000" />
-      <workItem from="1785949281318" duration="1233000" />
+      <workItem from="1785949281318" duration="1588000" />
     </task>
     <servers />
   </component>
