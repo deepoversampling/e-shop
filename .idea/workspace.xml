@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/postgresql.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.backend-and-frontend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.backend-and-frontend.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.backend.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop-ui/src/app/services/api-configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shop-ui/src/app/services/api-configuration.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +216,7 @@
       <workItem from="1785879386735" duration="6478000" />
       <workItem from="1785949281318" duration="2550000" />
       <workItem from="1786016954239" duration="5478000" />
-      <workItem from="1786102728136" duration="5840000" />
+      <workItem from="1786102728136" duration="9537000" />
     </task>
     <servers />
   </component>

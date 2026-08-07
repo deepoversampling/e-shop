@@ -12,6 +12,14 @@ import { Injectable } from '@angular/core';
 })
 export class ApiConfiguration {
   rootUrl: string = 'http://localhost:8080/api/v1';
+
+  constructor() {
+    fetch('/assets/api-url.txt')
+      .then((res: Response): Promise<string> => res.text())
+      .then((url: string): void => {
+        this.rootUrl = url.trim();
+      });
+  }
 }
 
 /**
