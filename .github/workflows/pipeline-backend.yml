@@ -34,13 +34,13 @@ jobs:
           java-version: 17
           distribution: 'corretto'
 
-      - name: Build backend
+      - name: Build backend project
         run: |
           cd shop
           chmod +x mvnw
           ./mvnw clean package
 
-      - name: Extract project version
+      - name: Extract backend project version
         id: extract_version
         run: |
           cd shop
@@ -52,7 +52,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build & Push Docker image
+      - name: Build & Push backend Docker image
         uses: docker/build-push-action@v7
         with:
           context: shop
@@ -64,7 +64,7 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/eshop-api:latest
 
   deploy:
-    name: Deploy Backend
+    name: Deploy backend
     runs-on: self-hosted
     needs: build-image
 
@@ -72,33 +72,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create PEM key file
-        run: echo "${{ secrets.PEM_KEY }}" > /tmp/pem_key.pem
+      - name: Create /tmp/eshop.pem (private key) on self-hosted runner
+        run: echo "${{ secrets.PEM_KEY }}" > /tmp/eshop.pem
 
-      - name: Fix PEM permissions
-        run: chmod 600 /tmp/pem_key.pem
+      - name: Set /tmp/eshop.pem permissions
+        run: chmod 600 /tmp/eshop.pem
 
-      - name: Create deployment folder on EC2
+      - name: Create /home/ec2-user/prod (deployment folder) on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@3.93.196.247 \
+          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@13.221.101.159 \
           "mkdir -p /home/ec2-user/prod"
-          
-      - name: Copy docker-compose to EC2
-        run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem docker-compose.prod.yml ec2-user@3.93.196.247:/home/ec2-user/prod/docker-compose.prod.yml
 
-      - name: Copy nginx.conf to EC2
+      - name: Copy docker-compose to EC2 deployment folder
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem nginx.conf ec2-user@3.93.196.247:/home/ec2-user/prod/nginx.conf
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem docker-compose.prod.yml ec2-user@13.221.101.159:/home/ec2-user/prod/docker-compose.prod.yml
 
-      - name: Upload .env to EC2
+      - name: Copy nginx.conf to EC2 deployment folder
         run: |
-          echo "${{ secrets.ENV_FILE }}" > /tmp/envfile.tmp
-          scp -o StrictHostKeyChecking=no -i /tmp/pem_key.pem /tmp/envfile.tmp ec2-user@3.93.196.247:/home/ec2-user/prod/.env
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem nginx.conf ec2-user@13.221.101.159:/home/ec2-user/prod/nginx.conf
+
+      - name: Copy .env to EC2 deployment folder
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > /tmp/.env
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem /tmp/.env ec2-user@13.221.101.159:/home/ec2-user/prod/.env
+
+      - name: Copy postgresql.conf to EC2 deployment folder
+        run: |
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem postgresql.conf ec2-user@13.221.101.159:/home/ec2-user/prod/postgresql.conf
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/pem_key.pem ec2-user@3.93.196.247 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@13.221.101.159 << 'EOF'
           cd /home/ec2-user/prod
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d
