@@ -8,7 +8,7 @@ on:
       - shop-ui/**
       - docker/frontend/**
       - docker-compose.prod.yml
-      - .github/workflows/pipeline-frontend.yml.yml
+      - .github/workflows/pipeline-frontend.yml
 
 jobs:
   build-image:

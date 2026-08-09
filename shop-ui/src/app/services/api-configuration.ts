@@ -18,6 +18,9 @@ export class ApiConfiguration {
       .then((res: Response): Promise<string> => res.text())
       .then((url: string): void => {
         this.rootUrl = url.trim();
+      })
+      .catch((): void => {
+        this.rootUrl = 'http://localhost:8080/api/v1';
       });
   }
 }
