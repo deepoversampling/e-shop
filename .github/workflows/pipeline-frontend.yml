@@ -48,6 +48,9 @@ jobs:
     needs: build-image
 
     steps:
+      - name: TODO
+        run: echo "frontend"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
