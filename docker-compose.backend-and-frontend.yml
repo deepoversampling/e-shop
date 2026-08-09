@@ -73,7 +73,7 @@ services:
   backend:
     container_name: backend-shop
     build:
-      context: /shop
+      context: /shop-api
       dockerfile: ../docker/backend/Dockerfile
     image: eshop/eshop-api:1.0.0
     ports:

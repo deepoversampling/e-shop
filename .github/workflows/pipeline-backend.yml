@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - shop/**
+      - shop-api/**
       - docker/backend/**
       - docker-compose.prod.yml
       - .github/workflows/pipeline-backend.yml
@@ -36,14 +36,14 @@ jobs:
 
       - name: Build backend project
         run: |
-          cd shop
+          cd shop-api
           chmod +x mvnw
           ./mvnw clean package
 
       - name: Extract backend project version
         id: extract_version
         run: |
-          cd shop
+          cd shop-api
           echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
 
       - name: Login to DockerHub
@@ -55,7 +55,7 @@ jobs:
       - name: Build & Push backend Docker image
         uses: docker/build-push-action@v7
         with:
-          context: shop
+          context: shop-api
           file: docker/backend/Dockerfile
           push: true
           platforms: linux/amd64
