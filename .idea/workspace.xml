@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6fa8a9-7acc-4dfb-9a10-9adf078174b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pipeline-backend.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pipeline-frontend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pipeline-frontend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +221,7 @@
       <workItem from="1786141957291" duration="5000" />
       <workItem from="1786142017958" duration="34000" />
       <workItem from="1786142072319" duration="459000" />
-      <workItem from="1786280617194" duration="3103000" />
+      <workItem from="1786280617194" duration="4029000" />
     </task>
     <servers />
   </component>

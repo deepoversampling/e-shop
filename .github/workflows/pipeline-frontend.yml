@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - name: TODO
-        run: echo "frontend"
+        run: echo "frontend1"
 
       - name: Checkout code
         uses: actions/checkout@v4
