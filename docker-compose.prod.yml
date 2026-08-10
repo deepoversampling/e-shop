@@ -73,6 +73,8 @@ services:
       - "4000"
     networks:
       - shop-net
+    volumes:
+      - ./config.json:/app/browser/assets/config.json
 
   nginx:
     image: nginx:1.27-alpine
