@@ -62,29 +62,29 @@ jobs:
 
       - name: Create /home/ec2-user/prod (deployment folder) on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@13.221.101.159 \
+          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@44.202.154.133 \
           "mkdir -p /home/ec2-user/prod"
 
       - name: Copy docker-compose to EC2 deployment folder
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem docker-compose.prod.yml ec2-user@13.221.101.159:/home/ec2-user/prod/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem docker-compose.prod.yml ec2-user@44.202.154.133:/home/ec2-user/prod/docker-compose.prod.yml
 
       - name: Copy nginx.conf to EC2 deployment folder
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem nginx.conf ec2-user@13.221.101.159:/home/ec2-user/prod/nginx.conf
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem nginx.conf ec2-user@44.202.154.133:/home/ec2-user/prod/nginx.conf
 
       - name: Copy .env to EC2 deployment folder
         run: |
           echo "${{ secrets.ENV_FILE }}" > /tmp/.env
-          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem /tmp/.env ec2-user@13.221.101.159:/home/ec2-user/prod/.env
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem /tmp/.env ec2-user@44.202.154.133:/home/ec2-user/prod/.env
 
       - name: Copy postgresql.conf to EC2 deployment folder
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem postgresql.conf ec2-user@13.221.101.159:/home/ec2-user/prod/postgresql.conf
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem postgresql.conf ec2-user@44.202.154.133:/home/ec2-user/prod/postgresql.conf
 
       - name: Deploy on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@13.221.101.159 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/eshop.pem ec2-user@44.202.154.133 << 'EOF'
           cd /home/ec2-user/prod
           docker-compose -f docker-compose.prod.yml pull -q
           docker-compose -f docker-compose.prod.yml up -d

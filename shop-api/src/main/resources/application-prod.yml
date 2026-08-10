@@ -20,7 +20,7 @@ spring:
         enable_lazy_load_no_trans: true
         format_sql: true
     cors:
-      origins: http://localhost
+      origins: ${ORIGIN}}
     open-in-view: false
 
   flyway:
