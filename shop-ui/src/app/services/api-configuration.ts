@@ -16,7 +16,10 @@ export class ApiConfiguration {
 
   constructor() {
     fetch('/assets/config.json')
-      .then((res: Response): Promise<any> => res.json())
+      .then((res: Response): Promise<any> => {
+        console.info(res.json());
+        return res.json();
+      })
       .then((cfg: any): any => this.rootUrl = cfg.apiUrl);
   }
 }
