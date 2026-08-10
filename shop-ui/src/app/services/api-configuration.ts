@@ -15,11 +15,9 @@ export class ApiConfiguration {
   rootUrl: string = 'http://localhost:8080/api/v1';
 
   constructor() {
-    if (IS_BROWSER) {
-      fetch('/assets/config.json')
-        .then((res: Response): Promise<any> => res.json())
-        .then((cfg: any): any => this.rootUrl = cfg.apiUrl);
-    }
+    fetch('/assets/config.json')
+      .then((res: Response): Promise<any> => res.json())
+      .then((cfg: any): any => this.rootUrl = cfg.apiUrl);
   }
 }
 
