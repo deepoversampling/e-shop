@@ -84,7 +84,7 @@ jobs:
 
       - name: Copy config.json to EC2 deployment folder
         run: |
-          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem ./shop-ui/src/app/assets/config.json ec2-user@44.202.154.133:/home/ec2-user/prod/config.json
+          scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem ./shop-ui/src/assets/config.json ec2-user@44.202.154.133:/home/ec2-user/prod/config.json
 
       - name: Deploy on EC2
         run: |
