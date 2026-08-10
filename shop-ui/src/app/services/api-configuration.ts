@@ -12,7 +12,7 @@ import {IS_BROWSER} from '../common/constants/constants';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://localhost:8080/api/v1';
+  rootUrl: string = 'http://44.202.154.133:8080/api/v1';
 
   constructor() {
     fetch('/assets/config.json')
