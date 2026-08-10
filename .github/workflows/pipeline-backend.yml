@@ -9,6 +9,7 @@ on:
       - docker/backend/**
       - docker-compose.prod.yml
       - .github/workflows/pipeline-backend.yml
+      - .env
 
 jobs:
   build-image:
