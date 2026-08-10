@@ -31,6 +31,6 @@ export const appConfig: ApplicationConfig = {
       tapToDismiss: true,
       positionClass: 'toast-bottom-right',
       timeOut: 8000
-    })
+    }),
   ]
 };
