@@ -86,6 +86,9 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-shop:5432/shop_db
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWK_SET_URI: http://keycloak-shop:8080/realms/e-shop/protocol/openid-connect/certs
+      SPRING_JPA_CORS_ORIGINS: http://localhost
+      APPLICATION_BACKEND_BASE_URL: http://localhost
+      APPLICATION_FRONTEND_BASE_URL: http://localhost
       SPRING_DATA_REDIS_HOST: redis-shop
       SPRING_DATA_REDIS_PORT: 6379
       JAVA_OPTS: "-Xms256m -Xmx512m"
@@ -104,6 +107,8 @@ services:
       - "4000"
     networks:
       - shop-net
+    depends_on:
+      - backend
 
   nginx:
     image: nginx:1.27-alpine

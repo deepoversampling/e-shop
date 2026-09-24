@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CategoryResponseDto} from '../../../services/models/category-response-dto';
+import {DEFAULT_COLOR} from '../../constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class CategoryColorizeService { // FIXME DONE
   // Empty category will have the color set
   public colorizeCategory(category: CategoryResponseDto, depth: number = 1, hue: number = 0): void {
     if (depth === 1) {
-      category.color = '#1E90FFFF';
+      category.color = DEFAULT_COLOR;
     } else {
       category.color = `hsl(${hue}, ${this._saturation}%, ${this._lightness}%)`;
     }

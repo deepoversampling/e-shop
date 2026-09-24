@@ -12,7 +12,7 @@ import {CartsInitService} from '../../../../../../services/user/carts-init/carts
 import {CurrencyFormatterService} from '../../../../../../common/helpers/currency/currency-formatter.service';
 import {ItemPropertiesFormatterService} from '../../../../../../common/helpers/item/item-properties-formatter.service';
 import {toNgSrc} from '../../../../../../common/utils/utils';
-import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/constants';
+import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/image.constants';
 
 @Component({
   selector: 'app-cart-card',

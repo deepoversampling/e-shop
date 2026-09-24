@@ -5,6 +5,6 @@
 import { ItemResponseDto } from '../models/item-response-dto';
 export interface CartResponseDto {
   id?: number;
-  isPaid?: boolean;
   items?: Array<ItemResponseDto>;
+  state?: 'NEW' | 'PENDING' | 'PAID';
 }

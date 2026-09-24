@@ -1,10 +1,10 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
+import {PRICE_REGEX} from '../../constants/regex';
 
 @Directive({
   selector: '[appTwoDecimalValidator]'
 })
 export class TwoDecimalValidatorDirective { // FIXME DONE
-  private readonly regex: RegExp = /^\d+(\.\d{0,2})?$/; // Number with optional decimal part with maximum 2 digits
   private readonly specialKeys: string[] = ['Backspace', 'Enter', 'Tab', 'Delete', 'ArrowLeft', 'ArrowRight'];
   private readonly combinationKeys: string[] = ['a', 'c', 'v', 'x', 'z'];
 
@@ -23,7 +23,7 @@ export class TwoDecimalValidatorDirective { // FIXME DONE
     // Simulates the new value of input
     const next: string = current.slice(0, selectionIndexFrom) + event.key + current.slice(selectionIndexTo);
 
-    if (!this.regex.test(next)) {
+    if (!PRICE_REGEX.test(next)) {
       event.preventDefault();
     }
   }
@@ -38,7 +38,7 @@ export class TwoDecimalValidatorDirective { // FIXME DONE
     // Simulates the new value of input
     const next: string = current.slice(0, selectionIndexFrom) + pasted + current.slice(selectionIndexTo);
 
-    if (!this.regex.test(next)) {
+    if (!PRICE_REGEX.test(next)) {
       event.preventDefault();
     }
   }

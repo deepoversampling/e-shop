@@ -17,7 +17,7 @@ import {ProductResponseDto} from '../../../services/models/product-response-dto'
 import {ItemResponseDto} from '../../../services/models/item-response-dto';
 import {ProductVariantResponseDto} from '../../../services/models/product-variant-response-dto';
 import {toNgSrc} from '../../utils/utils';
-import {IMAGE_FIT, IMAGE_SIZE, THUMBNAIL_IMAGE_SIZE} from '../../constants/constants';
+import {IMAGE_FIT, IMAGE_SIZE, THUMBNAIL_IMAGE_SIZE} from '../../constants/image.constants';
 
 @Component({
   selector: 'app-thumbnail-bar',
@@ -99,7 +99,7 @@ export class ThumbnailBarComponent implements AfterViewInit { // FIXME DONE
     const input: CartResponseDto | ProductResponseDto = this.input();
     // Item in paid cart
     if (this.hasItems(input)) {
-      if (input.isPaid) {
+      if (input.state === 'PAID') {
         return true;
       }
     }

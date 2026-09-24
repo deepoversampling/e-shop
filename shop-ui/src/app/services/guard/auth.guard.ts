@@ -1,10 +1,11 @@
 import {CanActivateFn} from '@angular/router';
 import {inject} from '@angular/core';
 import {KeycloakService} from '../keycloak/keycloak.service';
+import {Role} from '../../common/types/role';
 
 // Checks if the user is authenticated and he has appropriate role
-export const authGuard: (requiredRole: string) => CanActivateFn =
-  (requiredRole: string): CanActivateFn => (): boolean => {
+export const authGuard: (requiredRole: Role) => CanActivateFn =
+  (requiredRole: Role): CanActivateFn => (): boolean => {
     const keycloakService: KeycloakService = inject(KeycloakService);
     const isReady: boolean = keycloakService.isAuthenticated();
     const hasRole: boolean = keycloakService.userRole === requiredRole;

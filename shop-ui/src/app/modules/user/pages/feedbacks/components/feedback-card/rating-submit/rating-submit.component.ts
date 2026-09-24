@@ -23,7 +23,6 @@ export class RatingSubmitComponent { // FIXME DONE
     // When resetNoteTrigger becomes true, emit note with default value 0 and immediately reset the trigger to false
     effect((): void => {
       if (this.resetNoteTrigger()) {
-        console.log('resetNoteTrigger()');
         this.noteChange.emit(0);
         this.resetNoteTriggerChange.emit(false);
       }

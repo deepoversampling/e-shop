@@ -38,6 +38,7 @@ export class VariantHelpersService { // FIXME DONE
   public getInitializedProperties(properties: PropertyResponseDto[]): Record<number, string | null> {
     return Object.fromEntries(
       properties
+        // .map((property: PropertyResponseDto): [number, null] => [property.id!, null])
         .map((property: PropertyResponseDto): [number, null] => [property.id!, null])
     );
   }

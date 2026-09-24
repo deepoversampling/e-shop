@@ -6,7 +6,7 @@ import {ErrorHandlerService} from '../../../../../../services/error-handler/erro
 import {PropertyControllerService} from '../../../../../../services/services/property-controller.service';
 import {PropertyRequestDto} from '../../../../../../services/models/property-request-dto';
 import {PresetComponent} from '../preset/preset.component';
-import {CONTINUOUS_REGEX} from '../../../../../../common/constants/constants';
+import {CONTINUOUS_REGEX} from '../../../../../../common/constants/regex';
 import {StrictHttpResponse} from '../../../../../../services/strict-http-response';
 import {PropertyResponseDto} from '../../../../../../services/models/property-response-dto';
 import {getLocation} from '../../../../../../common/utils/utils';

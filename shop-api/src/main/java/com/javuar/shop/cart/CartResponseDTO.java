@@ -8,6 +8,6 @@ import java.util.List;
 @Builder
 public record CartResponseDTO(
         Integer id,
-        boolean isPaid,
+        CartState state,
         List<ItemResponseDTO> items
 ) {}

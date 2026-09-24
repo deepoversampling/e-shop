@@ -14,7 +14,7 @@ import {RatingSubmitComponent} from './rating-submit/rating-submit.component';
 import {CurrencyFormatterService} from '../../../../../../common/helpers/currency/currency-formatter.service';
 import {ItemPropertiesFormatterService} from '../../../../../../common/helpers/item/item-properties-formatter.service';
 import {toNgSrc} from '../../../../../../common/utils/utils';
-import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/constants';
+import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/image.constants';
 import {FeedbackResponseDto} from '../../../../../../services/models/feedback-response-dto';
 import {ToastrService} from 'ngx-toastr';
 import {SearchInitService} from '../../../../../../services/search-init/search-init.service';

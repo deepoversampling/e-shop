@@ -1,6 +1,6 @@
-// Returns value of the highest ID in the index signature object
 import {StrictHttpResponse} from '../../services/strict-http-response';
 
+// Returns value of the highest ID in the index signature object
 export function getLastIndex(map: { [key: string]: any }): number {
   return Object.keys(map)
     .reduce((highestId: number, key: string): number => {

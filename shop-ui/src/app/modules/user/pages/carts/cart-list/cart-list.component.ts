@@ -11,7 +11,7 @@ import {ExpandableDirective} from '../../../../../common/directives/expandable/e
 import {ThumbnailBarComponent} from '../../../../../common/components/thumbnail-bar/thumbnail-bar.component';
 import {MenuComponent} from '../../../../../common/components/menu/menu.component';
 import {CurrencyFormatterService} from '../../../../../common/helpers/currency/currency-formatter.service';
-import {THUMBNAILS_COUNT} from '../../../../../common/constants/constants';
+import {THUMBNAILS_COUNT} from '../../../../../common/constants/image.constants';
 
 @Component({
   selector: 'app-cart-list',
@@ -115,7 +115,7 @@ export class CartListComponent { // FIXME DONE
         this._errorHandlerService.handle(err);
 
         const activeCartId: number = this._cartsInitService.activeCartId;
-        await this._cartsInitService.init(); // Refreshes carts to prevent stale variantQuantity next time
+        await this._cartsInitService.init(); // Refreshes carts to prevent stale variantQuantity next time or when the cart is already finalized
         this._cartsInitService.activeCartId = activeCartId;
       }
     });

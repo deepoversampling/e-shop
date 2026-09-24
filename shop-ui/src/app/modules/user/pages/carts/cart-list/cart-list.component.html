@@ -6,7 +6,7 @@
     <!-- Carts -->
     <div class="flex-col">
       @for (cart of carts; track cart.id) {
-        @if (!cart.isPaid) {
+        @if (!(cart.state === 'PAID')) {
           <div
             class="border-full-one flex-col item-card"
             [class.active]="isActive(cart)"

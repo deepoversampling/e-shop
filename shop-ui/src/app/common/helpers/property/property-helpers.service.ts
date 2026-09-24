@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CategoryTemplateResponseDto} from '../../../services/models/category-template-response-dto';
 import {PropertyResponseDto} from '../../../services/models/property-response-dto';
-import {CONTINUOUS_REGEX} from '../../constants/constants';
+import {CONTINUOUS_REGEX} from '../../constants/regex';
 import {PropertyPresetDto} from '../../../services/models/property-preset-dto';
 
 @Injectable({
@@ -84,5 +84,7 @@ export class PropertyHelpersService { // FIXME DONE
   private decimalLengthToStep(length: number): number {
     return Math.pow(10, -length);
   }
+
+
 
 }

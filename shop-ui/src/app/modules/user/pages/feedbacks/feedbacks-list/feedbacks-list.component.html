@@ -3,7 +3,7 @@
 @if (isReady) {
   <div class="flex-col mt-menu">
     @for (cart of carts; track cart.id) {
-      @if (cart.isPaid) {
+      @if (cart.state === 'PAID') {
         <div
           class="border-full-one flex-col item-card"
           [class.collapsed]="!isVisible(cart)"

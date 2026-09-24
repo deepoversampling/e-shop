@@ -44,9 +44,9 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.javuar.shop.common.cache.ClearOwnerCartsCache.*;
-import static com.javuar.shop.common.cache.ClearOwnerProductsCache.*;
-import static com.javuar.shop.common.cache.ClearProductFeedbacksCache.*;
+import static com.javuar.shop.common.cache.ClearOwnerCartsCache.clearOwnerCartsCache;
+import static com.javuar.shop.common.cache.ClearOwnerProductsCache.clearOwnerProductsCache;
+import static com.javuar.shop.common.cache.ClearProductFeedbacksCache.clearProductFeedbacksCache;
 import static com.javuar.shop.common.constants.RegexConstants.CONTINUOUS_PATTERN;
 import static com.javuar.shop.exception.BusinessErrorCodes.*;
 

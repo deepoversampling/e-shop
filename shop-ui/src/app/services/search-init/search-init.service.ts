@@ -1,17 +1,20 @@
-import {effect, Injectable, signal, WritableSignal} from '@angular/core';
+import {effect, Inject, Injectable, PLATFORM_ID, signal, WritableSignal} from '@angular/core';
 import {CategoryResponseDto} from '../models/category-response-dto';
 import {ProductRequest} from '../models/product-request';
 import {ResourcesInitService} from '../resources-init/resources-init.service';
-import {PropertyResponseDto} from '../models/property-response-dto';
-import {isLeafCategory} from '../../common/utils/category/category-utils';
+import {findCategory, isLeafCategory} from '../../common/utils/category/category-utils';
 import {CategoryHelpersService} from '../../common/helpers/category/category-helpers.service';
-import {VariantHelpersService} from '../../common/helpers/variant/variant-helpers.service';
 import {PageResponseProductResponseDto} from '../models/page-response-product-response-dto';
 import {QuantityCache} from '../models/quantity-cache';
 import {ProductResponseDto} from '../models/product-response-dto';
 import {ProductVariantResponseDto} from '../models/product-variant-response-dto';
 import {VariantIndexCache} from '../models/variant-index-cache';
 import {SortBy} from '../../pages/components/product-search-options/enums/sort-by';
+import {KeycloakService} from '../keycloak/keycloak.service';
+import {isPlatformBrowser} from '@angular/common';
+import {StorageService} from '../../common/helpers/storage/storage.service';
+import {FilterService} from '../../common/helpers/filter/filter.service';
+import {GetFilteredProducts$Params} from '../fn/product-controller/get-filtered-products';
 
 @Injectable({
   providedIn: 'root'
@@ -37,32 +40,95 @@ export class SearchInitService { // FIXME DONE
   private readonly _page: WritableSignal<number> =
     signal<number>(0);
 
-  private _hasResponse: boolean = false; // False initially and when selected category, product request, filters or page is set. True when product response is set
-  private _useSortedVariantIndex: boolean = false; // True if sort by availability or price is used
   private _variantIndexCaches: Record<number, VariantIndexCache> = {}; // One per product
   private _quantityCaches: Record<number, QuantityCache> = {}; // One per variant
+
+  private _hasResponse: boolean = false; // False initially or on setter for selected category, product request, filters or page. True on setter for product response
+  private _useSortedVariantIndex: boolean = false; // True if sort by availability or price is used
+  public isFirstBrowserInit: boolean = true; // Changes to false on setter for selected category, filters, page or product request
+  public hasLocalStorageParams: WritableSignal<boolean> = signal<boolean>(false); // True if the search params from localstorage is valid and used to avoid using product response from Transfer State
 
   constructor(
     private readonly _resourcesInitService: ResourcesInitService,
     private readonly _categoryHelpersService: CategoryHelpersService,
-    private readonly _variantHelpersService: VariantHelpersService
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private readonly _keycloakService: KeycloakService,
+    private readonly _storageService: StorageService,
+    private readonly _filterService: FilterService
   ) {
-    // Sets current and selected category before the service is initialized to prevent {} from being used
+    const rootCategory: CategoryResponseDto = this._resourcesInitService.rootCategory();
+
+    // If the params item exists in localstorage the search fields are set based on it in the browser for the logged-in user
+    if (isPlatformBrowser(this._platformId) &&
+      this._keycloakService.isAuthenticated() && this._keycloakService.userRole === 'USER') {
+      // Search parameters retrieved from localstorage are valid
+      const searchParameters: GetFilteredProducts$Params | null = this._storageService.getSearchParameters();
+      if (searchParameters) {
+        // Filters retrieved from the localstorage require initialized filters because they are already cleaned of null values
+        this.setInitializedFilters(
+          findCategory(searchParameters['category-id'], rootCategory)!
+        );
+        this._storageService.restoreSearchParameters(
+          searchParameters,
+          this._currentCategory,
+          this._selectedCategory,
+          this._filters,
+          this._page,
+          this._productRequest,
+          this.hasLocalStorageParams
+        );
+      } else {
+        // Sets current and selected category to default root category when the params item doesn't exist in localstorage
+        this.setCurrentAndSelectedCategoriesAsRoot();
+        this.setInitializedFilters(rootCategory);
+      }
+    } else {
+      // Sets current and selected category to default root category before the service is initialized to prevent {} from being used in components
+      this.setCurrentAndSelectedCategoriesAsRoot();
+      this.setInitializedFilters(rootCategory);
+    }
+
+    // Sets current and selected category to default root category when root category changes avoiding overriding them initially in the first browser init
+    effect((): void => {
+      if (!this.isFirstBrowserInit) {
+        this.setCurrentAndSelectedCategoriesAsRoot();
+        this.setInitializedFilters(rootCategory);
+      }
+    });
+
+    effect((): void => {
+      // Restores variant index caches from localstorage in the browser for logged-in users
+      // The only variant index caches and quantity caches that can be safely retrieved are those that can be validated against the current products
+      // This way these caches have to be retrieved each time the product response changes
+      // Initial value of product response set in the signal initialization is ignored
+      if (this._productResponse().content !== undefined &&
+        isPlatformBrowser(this._platformId) &&
+        this._keycloakService.isAuthenticated() && this._keycloakService.userRole === 'USER') {
+        const variantIndexCaches: Record<string, VariantIndexCache> | null = this._storageService.getVariantIndexCaches();
+        const quantityCaches: Record<string, QuantityCache> | null = this._storageService.getQuantityCaches();
+
+        if (variantIndexCaches) {
+          this._storageService.restoreVariantIndexCaches(this._variantIndexCaches, variantIndexCaches, this._productResponse());
+        }
+
+        if (quantityCaches) {
+          this._storageService.restoreQuantityCaches(this._quantityCaches, quantityCaches, this._productResponse());
+        }
+      }
+    });
+  }
+
+  private setCurrentAndSelectedCategoriesAsRoot(): void {
     const rootCategory: CategoryResponseDto = this._resourcesInitService.rootCategory();
     this._currentCategory.set(rootCategory);
     this._selectedCategory.set(rootCategory);
+  }
 
-    // Sets filters map if the category is leaf category and template exists
-    if (this.getIsLeafCategory(rootCategory) && this.getHasCategoryTemplate(rootCategory)) {
-      this._filters.set(this.getInitializedFilters(rootCategory));
+  private setInitializedFilters(selectedCategory: CategoryResponseDto): void {
+    // Sets filters map initialized to default values if the category is leaf category and template exists
+    if (this.getIsLeafCategory(selectedCategory) && this.getHasCategoryTemplate(selectedCategory)) {
+      this._filters.set(this._filterService.getInitializedFilters(selectedCategory));
     }
-
-    // Sets current and selected category when root category changes
-    effect((): void => {
-      const rootCategory: CategoryResponseDto = this._resourcesInitService.rootCategory();
-      this._currentCategory.set(rootCategory);
-      this._selectedCategory.set(rootCategory);
-    });
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,9 +151,13 @@ export class SearchInitService { // FIXME DONE
   public set selectedCategory(category: CategoryResponseDto) {
     this._hasResponse = false;
 
+    if (this.isFirstBrowserInit) {
+      this.isFirstBrowserInit = false;
+    }
+
     this._filters.set(
       this.getIsLeafCategory(category) && this.getHasCategoryTemplate(category)
-        ? this.getInitializedFilters(category)
+        ? this._filterService.getInitializedFilters(category)
         : {}
     );
 
@@ -104,6 +174,10 @@ export class SearchInitService { // FIXME DONE
   // normalizes size, ensures sort direction when sorting is used, resets page to 0, and updates product request
   public set productRequest(productRequest: ProductRequest) {
     this._hasResponse = false;
+
+    if (this.isFirstBrowserInit) {
+      this.isFirstBrowserInit = false;
+    }
 
     this._useSortedVariantIndex = productRequest.sortBy === SortBy.AVAILABILITY || productRequest.sortBy === SortBy.PRICE;
     if (this._useSortedVariantIndex) {
@@ -143,6 +217,11 @@ export class SearchInitService { // FIXME DONE
   // Marks current product response as stale (false), resets page to 0, and set filters
   public set filters(filters: Record<number, string | null>) {
     this._hasResponse = false;
+
+    if (this.isFirstBrowserInit) {
+      this.isFirstBrowserInit = false;
+    }
+
     this._page.set(0);
     this._filters.set(filters);
   }
@@ -196,6 +275,11 @@ export class SearchInitService { // FIXME DONE
   // Marks current product response as stale (false), and sets page
   public set page(page: number) {
     this._hasResponse = false;
+
+    if (this.isFirstBrowserInit) {
+      this.isFirstBrowserInit = false;
+    }
+
     this._page.set(page);
   }
 
@@ -206,6 +290,10 @@ export class SearchInitService { // FIXME DONE
 
   public setQuantityCache(variant: ProductVariantResponseDto, quantity: number | null): void {
     this._quantityCaches[variant.id!].quantity = quantity;
+    // Platform check not needed because the method is only used in the browser
+    if (this._keycloakService.isAuthenticated() && this._keycloakService.userRole === 'USER') {
+      this._storageService.saveQuantityCaches(this._quantityCaches);
+    }
   }
 
   // Returns appropriate variant index
@@ -221,6 +309,10 @@ export class SearchInitService { // FIXME DONE
       this._variantIndexCaches[product.id!].sortedVariantIndex = variantIndex;
     } else {
       this._variantIndexCaches[product.id!].variantIndex = variantIndex;
+    }
+    // Platform check not needed because the method is only used in the browser
+    if (this._keycloakService.isAuthenticated() && this._keycloakService.userRole === 'USER') {
+      this._storageService.saveVariantIndexCaches(this._variantIndexCaches);
     }
   }
 
@@ -248,13 +340,6 @@ export class SearchInitService { // FIXME DONE
 
   private getHasCategoryTemplate(category: CategoryResponseDto): boolean {
     return this._categoryHelpersService.hasCategoryTemplate(category);
-  }
-
-  private getInitializedFilters(category: CategoryResponseDto): Record<number, string | null> {
-    const properties: PropertyResponseDto[] =
-      this._resourcesInitService.getCategoryTemplate(category).properties!;
-
-    return this._variantHelpersService.getInitializedProperties(properties);
   }
 
 }

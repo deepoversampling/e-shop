@@ -13,22 +13,22 @@ public class CartMapper {
     private final ItemMapper itemMapper;
 
     public CartResponseDTO toCartResponseDTO(Cart cart) {
-        List<ItemResponseDTO> itemResponseDTOS = cart.getItems().stream()
+        List<ItemResponseDTO> itemResponseDTOs = cart.getItems().stream()
                 .map(itemMapper::toItemResponseDTO)
                 .toList();
 
         return CartResponseDTO.builder()
                 .id(cart.getId())
-                .isPaid(cart.isPaid())
-                .items(itemResponseDTOS)
+                .state(cart.getState())
+                .items(itemResponseDTOs)
                 .build();
     }
 
-    public CartResponseDTO toCartResponseDTO(Cart cart, List<ItemResponseDTO> itemResponseDTOS) {
+    public CartResponseDTO toCartResponseDTO(Cart cart, List<ItemResponseDTO> itemResponseDTOs) {
         return CartResponseDTO.builder()
                 .id(cart.getId())
-                .isPaid(cart.isPaid())
-                .items(itemResponseDTOS)
+                .state(cart.getState())
+                .items(itemResponseDTOs)
                 .build();
     }
 }

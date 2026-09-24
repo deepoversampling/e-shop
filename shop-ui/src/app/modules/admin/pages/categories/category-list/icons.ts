@@ -38,6 +38,6 @@ export const ICONS: string[] = [
   'car', 'truck', 'motorcycle', 'gas-pump', 'oil-can',
 
   // Misc product categories
-  'book', 'newspaper', 'clipboard-list', 'box', 'boxes-stacked',
+  'book', 'newspaper', 'clipboard-list', 'box-open', 'boxes-stacked',
   'cube', 'cubes', 'basket-shopping', 'cart-shopping', 'bag-shopping'
 ];

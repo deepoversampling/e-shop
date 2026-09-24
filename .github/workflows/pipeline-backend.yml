@@ -70,9 +70,6 @@ jobs:
     needs: build-image
 
     steps:
-      - name: TODO
-        run: echo "backend1"
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -104,7 +101,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem postgresql.conf ec2-user@44.202.154.133:/home/ec2-user/prod/postgresql.conf
 
-      - name: Copy config.json to EC2 deployment folder
+      - name: Copy root-urls.json to EC2 deployment folder
         run: |
           scp -o StrictHostKeyChecking=no -i /tmp/eshop.pem config.json ec2-user@44.202.154.133:/home/ec2-user/prod/config.json
 

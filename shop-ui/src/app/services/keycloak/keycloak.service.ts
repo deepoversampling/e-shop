@@ -1,9 +1,9 @@
-import {ApplicationRef, computed, Injectable, Signal} from '@angular/core';
+import {ApplicationRef, computed, Inject, Injectable, PLATFORM_ID, Signal} from '@angular/core';
 import Keycloak, {KeycloakProfile} from 'keycloak-js';
 import {Router} from '@angular/router';
 import {first} from 'rxjs';
-import {Role} from './role';
-import {IS_BROWSER} from '../../common/constants/constants';
+import {isPlatformServer} from '@angular/common';
+import {Role} from '../../common/types/role';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,8 @@ export class KeycloakService { // FIXME DONE
 
   constructor(
     private readonly _router: Router,
-    private readonly _appRef: ApplicationRef
+    private readonly _appRef: ApplicationRef,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {}
 
   private get keycloak(): Keycloak {
@@ -33,7 +34,7 @@ export class KeycloakService { // FIXME DONE
   }
 
   public async init(): Promise<void> {
-    if (!IS_BROWSER) return;
+    if (isPlatformServer(this._platformId)) return;
 
     try {
       const isAuthenticated: boolean = await this.keycloak.init({

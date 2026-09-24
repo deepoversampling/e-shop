@@ -21,8 +21,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.javuar.shop.common.cache.ClearOwnerCartsCache.*;
-import static com.javuar.shop.common.cache.ClearOwnerProductsCache.*;
+import static com.javuar.shop.cart.CartState.NEW;
+import static com.javuar.shop.cart.CartState.PAID;
+import static com.javuar.shop.common.cache.ClearOwnerCartsCache.clearOwnerCartsCache;
+import static com.javuar.shop.common.cache.ClearOwnerProductsCache.clearOwnerProductsCache;
 import static com.javuar.shop.exception.BusinessErrorCodes.INVALID_STRIPE_SIGNATURE;
 
 @Slf4j
@@ -50,7 +52,8 @@ public class WebhookService {
             );
         }
 
-        if ("checkout.session.completed".equals(event.getType())) {
+        if ("checkout.session.completed".equals(event.getType()) ||
+                "checkout.session.canceled".equals(event.getType())) {
             EventDataObjectDeserializer deserializer = event.getDataObjectDeserializer();
 
             if (deserializer.getObject().isPresent()) {
@@ -61,23 +64,30 @@ public class WebhookService {
                     String cartId = session.getMetadata().get("cart_id");
 
                     if (cartId != null) {
-                        cartRepository.findById(Integer.valueOf(cartId))
-                                .ifPresent(cart -> {
-                                    // Owners of the bought product variants
-                                    Set<String> productOwners = new HashSet<>();
-                                    // Owners of the carts which have product variants bought by the user which makes checkout, including this user
-                                    Set<String> cartOwners = new HashSet<>(Set.of(cart.getCreatedBy()));
-                                    cart.getItems().forEach(item -> {
-                                        item.getProductVariant().setQuantity(item.getProductVariant().getQuantity() - item.getQuantity());
-                                        productOwners.add(item.getProductVariant().getProduct().getCreatedBy());
-                                        itemRepository.findAllByProductVariant_Id(item.getProductVariant().getId())
-                                                .forEach(itemCartOwner -> cartOwners.add(itemCartOwner.getCart().getCreatedBy()));
+                        switch (event.getType()) {
+                            case "checkout.session.completed" -> cartRepository.findById(Integer.valueOf(cartId))
+                                    .ifPresent(cart -> {
+                                        // Owners of the bought product variants
+                                        Set<String> productOwners = new HashSet<>();
+                                        // Owners of the carts which have product variants bought by the user which makes checkout, including this user
+                                        Set<String> cartOwners = new HashSet<>(Set.of(cart.getCreatedBy()));
+                                        cart.getItems().forEach(item -> {
+                                            item.getProductVariant().setQuantity(item.getProductVariant().getQuantity() - item.getQuantity());
+                                            productOwners.add(item.getProductVariant().getProduct().getCreatedBy());
+                                            itemRepository.findAllByProductVariant_Id(item.getProductVariant().getId())
+                                                    .forEach(itemCartOwner -> cartOwners.add(itemCartOwner.getCart().getCreatedBy()));
+                                        });
+                                        cart.setState(PAID);
+                                        cartRepository.save(cart);
+                                        productOwners.forEach(owner -> clearOwnerProductsCache(owner, productRedisTemplate));
+                                        cartOwners.forEach(owner -> clearOwnerCartsCache(owner, cartRedisTemplate));
                                     });
-                                    cart.setPaid(true);
-                                    cartRepository.save(cart);
-                                    productOwners.forEach(owner -> clearOwnerProductsCache(owner, productRedisTemplate));
-                                    cartOwners.forEach(owner -> clearOwnerCartsCache(owner, cartRedisTemplate));
-                                });
+                            case "checkout.session.expired" -> cartRepository.findById(Integer.valueOf(cartId))
+                                    .ifPresent(cart -> {
+                                        cart.setState(NEW);
+                                        cartRepository.save(cart);
+                                    });
+                        }
                     }
                 } else {
                     log.warn("Expected Stripe session, but got {}", stripeObject.getClass().getSimpleName());

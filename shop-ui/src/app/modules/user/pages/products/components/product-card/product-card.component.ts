@@ -19,7 +19,7 @@ import {
   VariantPropertiesFormatterService
 } from '../../../../../../common/helpers/variant/variant-properties-formatter.service';
 import {toNgSrc} from '../../../../../../common/utils/utils';
-import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/constants';
+import {IMAGE_FIT, IMAGE_SIZE} from '../../../../../../common/constants/image.constants';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({

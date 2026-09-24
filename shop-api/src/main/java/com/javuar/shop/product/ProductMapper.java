@@ -53,11 +53,11 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductResponseDTO toProductResponseDTO(Product product, List<ProductVariantResponseDTO> productVariantResponseDTOS) {
+    public ProductResponseDTO toProductResponseDTO(Product product, List<ProductVariantResponseDTO> productVariantResponseDTOs) {
         return ProductResponseDTO.builder()
                 .id(product.getId())
                 .categoryId(product.getCategory().getId())
-                .variants(productVariantResponseDTOS)
+                .variants(productVariantResponseDTOs)
                 .name(product.getName())
                 .description(product.getDescription())
                 .rate(product.getRate())

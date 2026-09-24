@@ -74,7 +74,7 @@ services:
     networks:
       - shop-net
     volumes:
-      - ./config.json:/app/browser/assets/config.json
+      - ./root-urls.json:/app/browser/assets/root-urls.json
 
   nginx:
     image: nginx:1.27-alpine

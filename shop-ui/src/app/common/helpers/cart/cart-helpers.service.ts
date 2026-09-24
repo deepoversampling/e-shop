@@ -23,7 +23,7 @@ export class CartHelpersService { // FIXME DONE
           // Feedbacks fetched per cart
           let cartFeedbacks: FeedbackResponseDto[] = [];
 
-          if (cart.isPaid!) {
+          if (cart.state === 'PAID') {
             try {
               cartFeedbacks = await firstValueFrom(
                 this._feedbackService.getFeedbacksByCartId({

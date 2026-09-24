@@ -26,8 +26,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.javuar.shop.common.cache.ClearProductFeedbacksCache.*;
-import static com.javuar.shop.common.cache.ClearCartFeedbacksCache.*;
+import static com.javuar.shop.cart.CartState.PAID;
+import static com.javuar.shop.common.cache.ClearCartFeedbacksCache.clearCartFeedbacksCache;
+import static com.javuar.shop.common.cache.ClearProductFeedbacksCache.clearProductFeedbacksCache;
 import static com.javuar.shop.exception.BusinessErrorCodes.*;
 
 @Service
@@ -61,7 +62,7 @@ public class FeedbackService {
             );
         }
 
-        if (!cart.isPaid()) {
+        if (cart.getState() != PAID) {
             throw new UnauthorizedFeedbackActionException(
                     UNAUTHORIZED_FEEDBACK_ACTION.name(),
                     UNAUTHORIZED_FEEDBACK_ACTION.getHttpStatus(),
@@ -151,7 +152,7 @@ public class FeedbackService {
             );
         }
 
-        if (!cart.isPaid()) {
+        if (cart.getState() != PAID) {
             throw new UnauthorizedFeedbackActionException(
                     UNAUTHORIZED_FEEDBACK_ACTION.name(),
                     UNAUTHORIZED_FEEDBACK_ACTION.getHttpStatus(),
@@ -189,7 +190,7 @@ public class FeedbackService {
             );
         }
 
-        if (!cart.isPaid()) {
+        if (cart.getState() != PAID) {
             throw new UnauthorizedFeedbackActionException(
                     UNAUTHORIZED_FEEDBACK_ACTION.name(),
                     UNAUTHORIZED_FEEDBACK_ACTION.getHttpStatus(),

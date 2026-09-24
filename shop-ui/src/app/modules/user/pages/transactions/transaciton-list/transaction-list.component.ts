@@ -6,7 +6,7 @@ import {ExpandableDirective} from '../../../../../common/directives/expandable/e
 import {ThumbnailBarComponent} from '../../../../../common/components/thumbnail-bar/thumbnail-bar.component';
 import {MenuComponent} from '../../../../../common/components/menu/menu.component';
 import {CurrencyFormatterService} from '../../../../../common/helpers/currency/currency-formatter.service';
-import {THUMBNAILS_COUNT} from '../../../../../common/constants/constants';
+import {THUMBNAILS_COUNT} from '../../../../../common/constants/image.constants';
 
 @Component({
   selector: 'app-transaction-list',

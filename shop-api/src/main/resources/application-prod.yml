@@ -20,7 +20,7 @@ spring:
         enable_lazy_load_no_trans: true
         format_sql: true
     cors:
-      origins: ${ORIGIN}}
+      origins: ${SPRING_JPA_CORS_ORIGINS}
     open-in-view: false
 
   flyway:
@@ -49,8 +49,8 @@ stripe:
   endpoint-secret: ${STRIPE_ENDPOINT_SECRET}
 
 application:
-  backend-base-url: http://localhost
-  frontend-base-url: http://localhost
+  backend-base-url: ${APPLICATION_BACKEND_BASE_URL}
+  frontend-base-url: ${APPLICATION_FRONTEND_BASE_URL}
 
 server:
   port: 8080

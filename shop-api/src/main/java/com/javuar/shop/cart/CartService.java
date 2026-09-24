@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.javuar.shop.common.cache.ClearOwnerProductsCache.*;
+import static com.javuar.shop.common.cache.ClearOwnerProductsCache.clearOwnerProductsCache;
 import static com.javuar.shop.exception.BusinessErrorCodes.*;
 
 @Service
@@ -38,7 +38,11 @@ public class CartService {
     @PreAuthorize("hasRole('USER') && !hasRole('ADMIN')")
     @CacheEvict(value = "ownerCarts", key = "#authentication.name")
     public CartResponseDTO saveCart(Authentication authentication) {
-        Cart cart = cartRepository.save(Cart.builder().build());
+        Cart cart = cartRepository.save(
+                Cart.builder()
+                        .state(CartState.NEW)
+                        .build()
+        );
 
         return cartMapper.toCartResponseDTO(cart);
     }
@@ -110,23 +114,30 @@ public class CartService {
             );
         }
 
-        if (cart.isPaid()) {
-            throw new CartFinalizedException(
+        switch (cart.getState()) {
+            // Prevents the cart from being removed when the checkout session has been crated and didn't expire yet
+            case PENDING -> throw new CartFinalizedException(
+                    PENDING_PAYMENT.name(),
+                    PENDING_PAYMENT.getHttpStatus(),
+                    String.format("Cart with the ID: %d has pending payment and cannot be removed", cartId)
+            );
+            case PAID -> throw new CartFinalizedException(
                     CART_FINALIZED.name(),
                     CART_FINALIZED.getHttpStatus(),
                     String.format("Cart with the ID: %d has already been finalized and cannot be removed", cartId)
             );
+            default -> {
+                cartRepository.delete(cart);
+
+                // Only present items can invalidate products cache
+                Set<Integer> productIds = cart.getItems().stream()
+                        .filter(Item::isPresent)
+                        .map(item -> item.getProductVariantSnapshot().getProductId())
+                        .collect(Collectors.toSet());
+                List<Product> products = productRepository.findByIdIn(productIds);
+                products.forEach(product -> clearOwnerProductsCache(product.getCreatedBy(), productRedisTemplate));
+            }
         }
-
-        cartRepository.delete(cart);
-
-        // Only present items can invalidate products cache
-        Set<Integer> productIds = cart.getItems().stream()
-                .filter(Item::isPresent)
-                .map(item -> item.getProductVariantSnapshot().getProductId())
-                .collect(Collectors.toSet());
-        List<Product> products = productRepository.findByIdIn(productIds);
-        products.forEach(product -> clearOwnerProductsCache(product.getCreatedBy(), productRedisTemplate));
     }
 
     @PreAuthorize("hasRole('USER') && !hasRole('ADMIN')")
@@ -148,69 +159,74 @@ public class CartService {
             );
         }
 
-        if (cart.isPaid()) {
-            throw new CartFinalizedException(
+        switch (cart.getState()) {
+            case PENDING -> throw new CartFinalizedException(
+                    PENDING_PAYMENT.name(),
+                    PENDING_PAYMENT.getHttpStatus(),
+                    String.format("Cart with the ID: %d has pending payment and cannot be modified", cartId)
+            );
+            case PAID -> throw new CartFinalizedException(
                     CART_FINALIZED.name(),
                     CART_FINALIZED.getHttpStatus(),
                     String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
             );
+            default -> {
+                boolean itemExistsAlready = cart.getItems().stream()
+                        .anyMatch(item ->
+                                item.getProductVariant().getId().equals(itemRequestDTO.productVariantId()));
+
+                if (itemExistsAlready) {
+                    throw new DuplicateItemException(
+                            DUPLICATE_ITEM.name(),
+                            DUPLICATE_ITEM.getHttpStatus(),
+                            String.format("Cart with the ID: %d already has product variant with the ID: %d",
+                                    cartId, itemRequestDTO.productVariantId()
+                            )
+                    );
+                }
+
+                ProductVariant productVariant = productVariantRepository.findById(itemRequestDTO.productVariantId())
+                        .orElseThrow(() -> new ProductVariantNotFoundException(
+                                PRODUCT_VARIANT_NOT_FOUND.name(),
+                                PRODUCT_VARIANT_NOT_FOUND.getHttpStatus(),
+                                String.format("Product variant with the ID: %d was not found", itemRequestDTO.productVariantId())
+                        ));
+
+                if (productVariant.getProduct().getCreatedBy().equals(authentication.getName())) {
+                    throw new SelfPurchaseNotAllowedException(
+                            SELF_PURCHASE_NOT_ALLOWED.name(),
+                            SELF_PURCHASE_NOT_ALLOWED.getHttpStatus(),
+                            String.format("You cannot purchase your own product variant with ID: %d", productVariant.getId())
+                    );
+                }
+
+                if (!(productVariant.getQuantity() >= itemRequestDTO.quantity())) {
+                    throw new OutOfStockException(
+                            OUT_OF_STOCK.name(),
+                            OUT_OF_STOCK.getHttpStatus(),
+                            String.format("Product variant with the ID: %d does not have enough quantity available", productVariant.getId())
+                    );
+                }
+
+                Item item = Item.builder()
+                        .cart(cart)
+                        .productVariant(productVariant)
+                        .productVariantSnapshot(ProductVariantSnapshot.from(productVariant))
+                        .quantity(itemRequestDTO.quantity())
+                        .build();
+
+                cart.getItems().add(item);
+                cartRepository.save(cart);
+
+                // Clear owner products cache associated with the item (present only)
+                if (item.isPresent()) {
+                    Optional<Product> product = productRepository.findProductById(item.getProductVariantSnapshot().getProductId());
+                    product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
+                }
+
+                return itemMapper.toItemResponseDTO(item);
+            }
         }
-
-        boolean itemExistsAlready = cart.getItems().stream()
-                .anyMatch(item ->
-                        item.getProductVariant().getId().equals(itemRequestDTO.productVariantId()));
-
-        if (itemExistsAlready) {
-            throw new DuplicateItemException(
-                    DUPLICATE_ITEM.name(),
-                    DUPLICATE_ITEM.getHttpStatus(),
-                    String.format("Cart with the ID: %d already has product variant with the ID: %d",
-                            cartId, itemRequestDTO.productVariantId()
-                    )
-            );
-        }
-
-        ProductVariant productVariant = productVariantRepository.findById(itemRequestDTO.productVariantId())
-                .orElseThrow(() -> new ProductVariantNotFoundException(
-                        PRODUCT_VARIANT_NOT_FOUND.name(),
-                        PRODUCT_VARIANT_NOT_FOUND.getHttpStatus(),
-                        String.format("Product variant with the ID: %d was not found", itemRequestDTO.productVariantId())
-                ));
-
-        if (productVariant.getProduct().getCreatedBy().equals(authentication.getName())) {
-            throw new SelfPurchaseNotAllowedException(
-                    SELF_PURCHASE_NOT_ALLOWED.name(),
-                    SELF_PURCHASE_NOT_ALLOWED.getHttpStatus(),
-                    String.format("You cannot purchase your own product variant with ID: %d", productVariant.getId())
-            );
-        }
-
-        if (!(productVariant.getQuantity() >= itemRequestDTO.quantity())) {
-            throw new OutOfStockException(
-                    OUT_OF_STOCK.name(),
-                    OUT_OF_STOCK.getHttpStatus(),
-                    String.format("Product variant with the ID: %d does not have enough quantity available", productVariant.getId())
-            );
-        }
-
-        Item item = Item.builder()
-                .cart(cart)
-                .productVariant(productVariant)
-                .productVariantSnapshot(ProductVariantSnapshot.from(productVariant))
-                .quantity(itemRequestDTO.quantity())
-                .build();
-
-        item = itemRepository.save(item);
-        cart.getItems().add(item);
-        cartRepository.save(cart);
-
-        // Clear owner products cache associated with the item (present only)
-        if (item.isPresent()) {
-            Optional<Product> product = productRepository.findProductById(item.getProductVariantSnapshot().getProductId());
-            product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
-        }
-
-        return itemMapper.toItemResponseDTO(item);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
@@ -233,30 +249,36 @@ public class CartService {
             );
         }
 
-        if (cart.isPaid()) {
-            throw new CartFinalizedException(
+        switch (cart.getState()) {
+            case PENDING -> throw new CartFinalizedException(
+                    PENDING_PAYMENT.name(),
+                    PENDING_PAYMENT.getHttpStatus(),
+                    String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
+            );
+            case PAID -> throw new CartFinalizedException(
                     CART_FINALIZED.name(),
                     CART_FINALIZED.getHttpStatus(),
                     String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
             );
-        }
+            default -> {
+                // Item with a provided ID has to exist in the cart
+                Item itemToRemove = cart.getItems().stream()
+                        .filter(item -> item.getId().equals(itemId))
+                        .findFirst()
+                        .orElseThrow(() -> new ItemNotFoundException(
+                                ITEM_NOT_FOUND.name(),
+                                ITEM_NOT_FOUND.getHttpStatus(),
+                                String.format("Item with the ID: %d was not found", itemId)
+                        ));
 
-        // Item with a provided ID has to exist in the cart
-        Item itemToRemove = cart.getItems().stream()
-                .filter(item -> item.getId().equals(itemId))
-                .findFirst()
-                .orElseThrow(() -> new ItemNotFoundException(
-                        ITEM_NOT_FOUND.name(),
-                        ITEM_NOT_FOUND.getHttpStatus(),
-                        String.format("Item with the ID: %d was not found", itemId)
-                ));
+                cart.getItems().remove(itemToRemove);
+                cartRepository.save(cart);
 
-        cart.getItems().remove(itemToRemove);
-        cartRepository.save(cart);
-
-        if (itemToRemove.isPresent()) {
-            Optional<Product> product = productRepository.findProductById(itemToRemove.getProductVariantSnapshot().getProductId());
-            product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
+                if (itemToRemove.isPresent()) {
+                    Optional<Product> product = productRepository.findProductById(itemToRemove.getProductVariantSnapshot().getProductId());
+                    product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
+                }
+            }
         }
     }
 
@@ -279,50 +301,56 @@ public class CartService {
             );
         }
 
-        if (cart.isPaid()) {
-            throw new CartFinalizedException(
+        switch (cart.getState()) {
+            case PENDING -> throw new CartFinalizedException(
+                    PENDING_PAYMENT.name(),
+                    PENDING_PAYMENT.getHttpStatus(),
+                    String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
+            );
+            case PAID -> throw new CartFinalizedException(
                     CART_FINALIZED.name(),
                     CART_FINALIZED.getHttpStatus(),
                     String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
             );
-        }
+            default -> {
+                Item itemToUpdate = cart.getItems().stream()
+                        .filter(item -> item.getId().equals(itemId))
+                        .findFirst()
+                        .orElseThrow(() -> new ItemNotFoundException(
+                                ITEM_NOT_FOUND.name(),
+                                ITEM_NOT_FOUND.getHttpStatus(),
+                                String.format("Item with the ID: %d was not found", itemId)
+                        ));
 
-        Item itemToUpdate = cart.getItems().stream()
-                .filter(item -> item.getId().equals(itemId))
-                .findFirst()
-                .orElseThrow(() -> new ItemNotFoundException(
-                        ITEM_NOT_FOUND.name(),
-                        ITEM_NOT_FOUND.getHttpStatus(),
-                        String.format("Item with the ID: %d was not found", itemId)
-                ));
+                if (itemToUpdate.getQuantity().equals(quantityDTO.quantity())) {
+                    throw new QuantityUnchangedException(
+                            QUANTITY_UNCHANGED.name(),
+                            QUANTITY_UNCHANGED.getHttpStatus(),
+                            String.format("Item with the ID: %d has already quantity: %d", itemId, quantityDTO.quantity())
+                    );
+                }
 
-        if (itemToUpdate.getQuantity().equals(quantityDTO.quantity())) {
-            throw new QuantityUnchangedException(
-                    QUANTITY_UNCHANGED.name(),
-                    QUANTITY_UNCHANGED.getHttpStatus(),
-                    String.format("Item with the ID: %d has already quantity: %d", itemId, quantityDTO.quantity())
-            );
-        }
+                if (!itemToUpdate.isPresent()) {
+                    throw new ProductVariantNotFoundException(
+                            PRODUCT_VARIANT_NOT_FOUND.name(),
+                            PRODUCT_VARIANT_NOT_FOUND.getHttpStatus(),
+                            String.format("Product variant with the name: %s was not found", itemToUpdate.getProductVariantSnapshot().getName())
+                    );
+                } else if (!(itemToUpdate.getProductVariant().getQuantity() >= quantityDTO.quantity())) {
+                    throw new OutOfStockException(
+                            OUT_OF_STOCK.name(),
+                            OUT_OF_STOCK.getHttpStatus(),
+                            String.format("Product with the ID: %d does not have enough quantity available", itemToUpdate.getProductVariant().getId())
+                    );
+                } else {
+                    itemToUpdate.setQuantity(quantityDTO.quantity());
+                    cartRepository.save(cart);
 
-        if (!itemToUpdate.isPresent()) {
-            throw new ProductVariantNotFoundException(
-                    PRODUCT_VARIANT_NOT_FOUND.name(),
-                    PRODUCT_VARIANT_NOT_FOUND.getHttpStatus(),
-                    String.format("Product variant with the name: %s was not found", itemToUpdate.getProductVariantSnapshot().getName())
-            );
-        } else if (!(itemToUpdate.getProductVariant().getQuantity() >= quantityDTO.quantity())) {
-            throw new OutOfStockException(
-                    OUT_OF_STOCK.name(),
-                    OUT_OF_STOCK.getHttpStatus(),
-                    String.format("Product with the ID: %d does not have enough quantity available", itemToUpdate.getProductVariant().getId())
-            );
-        } else {
-            itemToUpdate.setQuantity(quantityDTO.quantity());
-            cartRepository.save(cart);
-
-            if (itemToUpdate.isPresent()) {
-                Optional<Product> product = productRepository.findProductById(itemToUpdate.getProductVariantSnapshot().getProductId());
-                product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
+                    if (itemToUpdate.isPresent()) {
+                        Optional<Product> product = productRepository.findProductById(itemToUpdate.getProductVariantSnapshot().getProductId());
+                        product.ifPresent((Product p) -> clearOwnerProductsCache(p.getCreatedBy(), productRedisTemplate));
+                    }
+                }
             }
         }
     }

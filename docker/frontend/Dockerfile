@@ -9,7 +9,7 @@ RUN npm ci
 COPY . .
 
 # Build Angular SSR (browser + server bundles)
-RUN npx ng b
+RUN npx ng b -c production
 
 # Runtime stage
 FROM node:18-alpine AS runtime

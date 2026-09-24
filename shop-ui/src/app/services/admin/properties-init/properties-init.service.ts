@@ -7,7 +7,6 @@ import {KeycloakService} from '../../keycloak/keycloak.service';
 import {ErrorHandlerService} from '../../error-handler/error-handler.service';
 import {PropertyHelpersService} from '../../../common/helpers/property/property-helpers.service';
 import {getLastIndex} from '../../../common/utils/utils';
-import {IS_BROWSER} from '../../../common/constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +45,6 @@ export class PropertiesInitService { // FIXME DONE
 
   // Fetches properties, applies continuous constraints and sets them
   public async init(): Promise<void> {
-    if (!IS_BROWSER) return;
-
     let properties: PropertyResponseDto[] = [];
     try {
       properties = await firstValueFrom(this._propertyService.getProperties());

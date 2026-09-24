@@ -7,7 +7,7 @@ import {ThumbnailBarComponent} from '../../../../../common/components/thumbnail-
 import {MenuComponent} from '../../../../../common/components/menu/menu.component';
 import {CurrencyFormatterService} from '../../../../../common/helpers/currency/currency-formatter.service';
 import {hasPendingFeedback} from '../../../../../common/utils/cart/cart-utils';
-import {THUMBNAILS_COUNT} from '../../../../../common/constants/constants';
+import {THUMBNAILS_COUNT} from '../../../../../common/constants/image.constants';
 
 @Component({
   selector: 'app-feedbacks-list',

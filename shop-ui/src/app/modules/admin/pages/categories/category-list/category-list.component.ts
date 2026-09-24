@@ -34,6 +34,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class CategoryListComponent implements OnInit, AfterViewChecked { // FIXME DONE
   protected readonly icons: string[] = ICONS;
+  protected static FONTAWESOME_SOLID_PREFIX: string = 'fas fa-';
 
   @ViewChildren('category')
   private readonly _categoryRefs!: QueryList<ElementRef<HTMLButtonElement>>;
@@ -294,7 +295,7 @@ export class CategoryListComponent implements OnInit, AfterViewChecked { // FIXM
       body.parentId = parentCategoryId;
     }
     if (icon !== null) {
-      body.icon = 'fas fa-' + icon;
+      body.icon = CategoryListComponent.FONTAWESOME_SOLID_PREFIX + icon;
     }
 
     this._categoryService.createCategory$Response({
@@ -323,7 +324,7 @@ export class CategoryListComponent implements OnInit, AfterViewChecked { // FIXM
     this._categoryService.patchCategoryIconById({
       'category-id': category.id,
       body: {
-        icon: 'fas fa-' + icon
+        icon: CategoryListComponent.FONTAWESOME_SOLID_PREFIX + icon
       }
     }).subscribe({
       next: async (): Promise<void> => {

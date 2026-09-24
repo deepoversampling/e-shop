@@ -11,7 +11,6 @@ import {FormControl, Validators} from '@angular/forms';
 import {CartHelpersService} from '../../../common/helpers/cart/cart-helpers.service';
 import {hasPendingFeedback} from '../../../common/utils/cart/cart-utils';
 import {ItemHelpersService} from '../../../common/helpers/item/item-helpers.service';
-import {IS_BROWSER} from '../../../common/constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +62,7 @@ export class CartsInitService { // FIXME DONE
     effect((): void => {
       this.feedbackResizeTriggers();
       this.carts()
-        .filter((cart: CartResponseDto): boolean => cart.isPaid!)
+        .filter((cart: CartResponseDto): boolean => cart.state === 'PAID')
         .forEach((cart: CartResponseDto): void => {
           if (!hasPendingFeedback(cart)) {
             this.removeFeedbackResizeTrigger(cart);
@@ -75,11 +74,9 @@ export class CartsInitService { // FIXME DONE
   // Fetches and sets carts, ensures an unpaid cart exists, sets the active cart,
   // initializes cart states without affecting existing ones
   public async init(): Promise<void> {
-    if (!IS_BROWSER) return;
-
     let carts: CartResponseDto[] = await this.getCarts();
     const unpaidCartExists: boolean =
-      carts.some((cart: CartResponseDto): boolean => !cart.isPaid!);
+      carts.some((cart: CartResponseDto): boolean => !(cart.state === 'PAID'));
 
     // If no unpaid cart exists, the new one becomes active
     if (!unpaidCartExists) {
@@ -94,7 +91,7 @@ export class CartsInitService { // FIXME DONE
       // Otherwise the last one becomes active
     } else {
       this.activeCartId = carts
-        .filter((cart: CartResponseDto): boolean => !cart.isPaid!)
+        .filter((cart: CartResponseDto): boolean => !(cart.state === 'PAID'))
         .reduce((highestUnpaidCartId: number, cart: CartResponseDto): number => {
           return cart.id! > highestUnpaidCartId
             ? cart.id!
@@ -126,7 +123,7 @@ export class CartsInitService { // FIXME DONE
         }
 
         // Unpaid carts
-        if (!cart.isPaid!) {
+        if (!(cart.state === 'PAID')) {
           if (this._cartVisibilities[cart.id!] === undefined) {
             this._cartVisibilities[cart.id!] = false;
           }

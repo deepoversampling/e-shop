@@ -11,8 +11,7 @@ import {FilePreview} from '../../models/file-preview';
 import {FormControl, Validators} from '@angular/forms';
 import {VariantHelpersService} from '../../../common/helpers/variant/variant-helpers.service';
 import {getLastIndex} from '../../../common/utils/utils';
-import {IS_BROWSER} from '../../../common/constants/constants';
-import {firstValueFrom} from 'rxjs';
+import {firstValueFrom, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,17 +55,19 @@ export class ProductsInitService { // FIXME DONE
   // Fetches and sets products,
   // initializes product states without affecting existing ones
   public async init(): Promise<void> {
-    if (!IS_BROWSER) return;
-
     let products: ProductVariantResponseDto[] = [];
     try {
-      products = await firstValueFrom(this._productService.getProductsByOwner());
+      await firstValueFrom(
+        this._productService.getProductsByOwner().pipe(
+          tap((products: ProductResponseDto[]): void => {
+            this.initProductStates(products);
+            this._products.set(products);
+          })
+        )
+      );
     } catch (err: any) {
       this._errorHandlerService.handle(err);
     }
-
-    this.initProductStates(products);
-    this._products.set(products);
   }
 
   // Initializes product visibilities, variant draft visibilities, scrolls, variant draft caches,

@@ -17,7 +17,7 @@ export class CategoryComponent { // FIXME DONE
   public readonly selectedCategoryChange: OutputEmitterRef<CategoryResponseDto> = output<CategoryResponseDto>();
 
   constructor(
-    protected readonly _resourcesInitService: ResourcesInitService,
+    private readonly _resourcesInitService: ResourcesInitService,
     private readonly _categoryHelpersService: CategoryHelpersService
   ) {}
 

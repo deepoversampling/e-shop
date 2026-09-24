@@ -22,7 +22,8 @@ create table _user (
 );
 create table cart (
                       id integer not null,
-                      is_paid boolean not null,
+                      state smallint not null check (state between 0 and 2),
+                      version integer,
                       created_date timestamp(6) not null,
                       last_modified_date timestamp(6),
                       created_by varchar(255) not null,

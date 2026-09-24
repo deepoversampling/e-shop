@@ -24,7 +24,10 @@ public class Cart extends BaseEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private boolean isPaid;
+    // TODO sql and flyway refactor
+    // TODO add link to stripe
+    @Enumerated(EnumType.STRING)
+    private CartState state;
 
     // Many-valued association with (1:N) multiplicity
     // Non-owning side of bidirectional relationship
@@ -33,4 +36,7 @@ public class Cart extends BaseEntity {
     @Builder.Default
     @OrderBy("id ASC") // Items will be ordered by ID (from the oldest to the newest)
     private List<Item> items = new ArrayList<>();
+
+    @Version
+    private Integer version;
 }

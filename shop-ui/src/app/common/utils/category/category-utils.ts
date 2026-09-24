@@ -37,9 +37,10 @@ export function flattenCategory(category: CategoryResponseDto): CategoryResponse
   return flattenedCategory;
 }
 
-export function findCategory(categoryToFind: CategoryResponseDto, rootCategory: CategoryResponseDto): CategoryResponseDto | undefined {
+export function findCategory(arg: number | CategoryResponseDto, rootCategory: CategoryResponseDto): CategoryResponseDto | undefined {
+  const categoryId: number = typeof arg === 'number' ? arg : arg.id!;
   return flattenCategory(rootCategory)
-    .find((category: CategoryResponseDto): boolean => category.id! === categoryToFind.id!);
+    .find((category: CategoryResponseDto): boolean => category.id! === categoryId);
 }
 
 export function getCategoryDepth(category: CategoryResponseDto, depth: number = 0): number {

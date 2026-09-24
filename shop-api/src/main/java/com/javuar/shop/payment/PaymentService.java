@@ -19,13 +19,19 @@ import com.stripe.model.Customer;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+
+import static com.javuar.shop.cart.CartState.PENDING;
 import static com.javuar.shop.exception.BusinessErrorCodes.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
@@ -36,6 +42,7 @@ public class PaymentService {
     private String frontendBaseURL;
 
     @PreAuthorize("hasRole('USER')")
+    @Transactional
     public String startCartHostedCheckout(Integer cartId, Authentication authentication) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new CartNotFoundException(
@@ -52,15 +59,19 @@ public class PaymentService {
             );
         }
 
-        if (cart.isPaid()) {
-            throw new CartFinalizedException(
+        switch (cart.getState()) {
+            case PENDING -> throw new CartFinalizedException(
+                    PENDING_PAYMENT.name(),
+                    PENDING_PAYMENT.getHttpStatus(),
+                    String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
+            );
+            case PAID -> throw new CartFinalizedException(
                     CART_FINALIZED.name(),
                     CART_FINALIZED.getHttpStatus(),
                     String.format("Cart with the ID: %d has already been finalized and cannot be modified", cartId)
             );
-        }
-
-        cart.getItems().forEach(item -> {
+            default -> {
+                cart.getItems().forEach(item -> {
                     if (!item.isPresent()) {
                         throw new ProductVariantNotFoundException(
                                 PRODUCT_VARIANT_NOT_FOUND.name(),
@@ -76,47 +87,54 @@ public class PaymentService {
                     }
                 });
 
-        User user = userRepository.findById(authentication.getName())
-                .orElseThrow(() -> new UserNotFoundException(
-                        USER_NOT_FOUND.name(),
-                        USER_NOT_FOUND.getHttpStatus(),
-                        String.format("User with the ID: %s was not found", authentication.getName())
-                ));
+                cart.setState(PENDING);
+                cartRepository.saveAndFlush(cart);
+                log.info(String.valueOf(cart.getState()));
 
-        Customer customer;
-        try {
-            customer = CustomerUtils.findOrCreateCustomer(user.getEmail(), user.fullName());
-        } catch (StripeException e) {
-            throw new StripeCustomerCreationException(
-                    STRIPE_CUSTOMER_CREATION.name(),
-                    STRIPE_CUSTOMER_CREATION.getHttpStatus(),
-                    String.format("Stripe failed to retrieve customer with the email: %s and full name: %s", user.getEmail(), user.fullName()),
-                    e
-            );
+                User user = userRepository.findById(authentication.getName())
+                        .orElseThrow(() -> new UserNotFoundException(
+                                USER_NOT_FOUND.name(),
+                                USER_NOT_FOUND.getHttpStatus(),
+                                String.format("User with the ID: %s was not found", authentication.getName())
+                        ));
+
+                Customer customer;
+                try {
+                    customer = CustomerUtils.findOrCreateCustomer(user.getEmail(), user.fullName());
+                } catch (StripeException e) {
+                    throw new StripeCustomerCreationException(
+                            STRIPE_CUSTOMER_CREATION.name(),
+                            STRIPE_CUSTOMER_CREATION.getHttpStatus(),
+                            String.format("Stripe failed to retrieve customer with the email: %s and full name: %s", user.getEmail(), user.fullName()),
+                            e
+                    );
+                }
+
+                SessionCreateParams.Builder paramsBuilder =
+                        SessionCreateParams.builder()
+                                .setMode(SessionCreateParams.Mode.PAYMENT)
+                                .setCustomer(customer.getId())
+                                .setSuccessUrl(frontendBaseURL + "/success?session_id={CHECKOUT_SESSION_ID}")
+                                .setCancelUrl(frontendBaseURL + "/failure")
+                                .setExpiresAt(30L)
+                                .putMetadata("cart_id", cart.getId().toString());
+
+                cart.getItems().forEach(item -> paramsBuilder.addLineItem(LineItemBuilder.build(item)));
+
+                Session session;
+                try {
+                    session = Session.create(paramsBuilder.build());
+                } catch (StripeException e) {
+                    throw new StripeSessionCreationException(
+                            STRIPE_SESSION_CREATION.name(),
+                            STRIPE_SESSION_CREATION.getHttpStatus(),
+                            "Stripe failed to create session",
+                            e
+                    );
+                }
+
+                return session.getUrl();
+            }
         }
-
-        SessionCreateParams.Builder paramsBuilder =
-                SessionCreateParams.builder()
-                        .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setCustomer(customer.getId())
-                        .setSuccessUrl(frontendBaseURL + "/success?session_id={CHECKOUT_SESSION_ID}")
-                        .setCancelUrl(frontendBaseURL + "/failure")
-                        .putMetadata("cart_id", cart.getId().toString());
-
-        cart.getItems().forEach(item -> paramsBuilder.addLineItem(LineItemBuilder.build(item)));
-
-        Session session;
-        try {
-            session = Session.create(paramsBuilder.build());
-        } catch (StripeException e) {
-            throw new StripeSessionCreationException(
-                    STRIPE_SESSION_CREATION.name(),
-                    STRIPE_SESSION_CREATION.getHttpStatus(),
-                    "Stripe failed to create session",
-                    e
-            );
-        }
-
-        return session.getUrl();
     }
 }

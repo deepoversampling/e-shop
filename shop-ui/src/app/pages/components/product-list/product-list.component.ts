@@ -1,16 +1,28 @@
-import {Component, effect, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
+import {
+  Component,
+  effect,
+  Inject,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+  PLATFORM_ID,
+  TransferState
+} from '@angular/core';
 import {PageResponseProductResponseDto} from '../../../services/models/page-response-product-response-dto';
 import {ProductControllerService} from '../../../services/services/product-controller.service';
 import {ProductCardComponent} from '../product-card/product-card.component';
 import {CategoryResponseDto} from '../../../services/models/category-response-dto';
 import {FormsModule} from '@angular/forms';
-import {catchError, debounceTime, EMPTY, Observable, Subject, switchMap} from 'rxjs';
+import {catchError, debounceTime, EMPTY, Observable, Subject, switchMap, tap} from 'rxjs';
 import {ProductRequest} from '../../../services/models/product-request';
 import {GetFilteredProducts$Params} from '../../../services/fn/product-controller/get-filtered-products';
 import {SearchInitService} from '../../../services/search-init/search-init.service';
-import {filter} from 'rxjs/operators';
-import {IS_BROWSER} from '../../../common/constants/constants';
 import {ErrorHandlerService} from '../../../services/error-handler/error-handler.service';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
+import {PRODUCT_RESPONSE_KEY} from '../../../common/constants/state-key';
+import {KeycloakService} from '../../../services/keycloak/keycloak.service';
+import {StorageService} from '../../../common/helpers/storage/storage.service';
 
 @Component({
   selector: 'app-product-list',
@@ -34,12 +46,15 @@ export class ProductListComponent { // FIXME DONE
   constructor(
     private readonly _productService: ProductControllerService,
     private readonly _errorHandlerService: ErrorHandlerService,
-    private readonly _searchInitService: SearchInitService
+    private readonly _searchInitService: SearchInitService,
+    private readonly _transferState: TransferState,
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private readonly _keycloakService: KeycloakService,
+    private readonly _storageService: StorageService
   ) {
     this._productRequest$
       .pipe( // Chains RxJS operators to transform the _productRequest$ observable stream
         debounceTime(100),
-        filter((): boolean => IS_BROWSER),
         switchMap((): Observable<PageResponseProductResponseDto> => {
           const request: ProductRequest = this.productRequest();
           const pageSize: number | null = request.size;
@@ -84,8 +99,18 @@ export class ProductListComponent { // FIXME DONE
             params['price'] = Number(price);
           }
 
+          if (!params["category-id"]) { // Handles root category that has no categories yet
+            return EMPTY;
+          }
+
           return this._productService.getFilteredProducts(params)
             .pipe(
+              tap((): void => { // Saves request parameters and body of the request in localstorage to retrieve them after page reload
+                if (isPlatformBrowser(this._platformId) &&
+                  this._keycloakService.isAuthenticated() && this._keycloakService.userRole === 'USER') {
+                  this._storageService.saveSearchParameters(params);
+                }
+              }),
               catchError((err: any): Observable<never> => {
                 this._errorHandlerService.handle(err);
                 return EMPTY; // Observable that emits no items to the Observer and immediately emits a complete notification
@@ -93,22 +118,41 @@ export class ProductListComponent { // FIXME DONE
             );
         })
       )
-      .subscribe((productResponse: PageResponseProductResponseDto): void => {
+      .subscribe((productResponse: PageResponseProductResponseDto): void => { // Observer is registered to listen to the Subject and the value will be multicasted to him
         this.productResponseChange.emit(productResponse);
+        // Server saves product response in TransferState
+        if (isPlatformServer(this._platformId)) {
+          this._transferState.set(PRODUCT_RESPONSE_KEY, productResponse);
+        }
       });
 
-    this.setupReactiveTriggers();
+    if (isPlatformServer(this._platformId)) {
+      this._productRequest$.next(); // Server calls next() to feed a new value to Subject only once
+    } else {
+      this.setupReactiveTriggers(); // Browser setup reactive triggers to feed a new value to Subject based on the signal changes (selected category, filters, page or product request)
+    }
   }
 
-  // New value is fed only when the current product response is stale
   private setupReactiveTriggers(): void {
     effect((): void => {
       this.selectedCategory();
       this.filters();
       this.page();
       this.productRequest();
-      if (!this._searchInitService.hasResponse) {
-        this._productRequest$.next();
+
+      // If search params in localstorage don't exist then product response from TransferState on first browser init is used to avoid double data fetch
+      if (this._searchInitService.isFirstBrowserInit &&
+        this._transferState.hasKey(PRODUCT_RESPONSE_KEY) &&
+        !this._searchInitService.hasLocalStorageParams()) {
+        this.productResponseChange.emit(
+          this._transferState.get<PageResponseProductResponseDto>(PRODUCT_RESPONSE_KEY, {})
+        );
+        this._transferState.remove(PRODUCT_RESPONSE_KEY);
+      } else {
+        // New value is fed only when the current product response is stale (selected category, filters, page or product request changed)
+        if (!this._searchInitService.hasResponse) {
+          this._productRequest$.next();
+        }
       }
     });
   }

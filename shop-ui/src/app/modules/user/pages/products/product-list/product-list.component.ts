@@ -10,7 +10,7 @@ import {ProductsInitService} from '../../../../../services/user/products-init/pr
 import {ExpandableDirective} from '../../../../../common/directives/expandable/expandable.directive';
 import {ThumbnailBarComponent} from '../../../../../common/components/thumbnail-bar/thumbnail-bar.component';
 import {MenuComponent} from '../../../../../common/components/menu/menu.component';
-import {THUMBNAILS_COUNT} from '../../../../../common/constants/constants';
+import {THUMBNAILS_COUNT} from '../../../../../common/constants/image.constants';
 
 @Component({
   selector: 'app-product-list',

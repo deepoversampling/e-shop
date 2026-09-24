@@ -64,12 +64,13 @@ public class Product extends BaseEntity {
     // Sum of item quantities
     // which their carts are paid
     // and their variant exists in variants from this product
+    // TODO 2 needs comment
     @Formula("""
             (SELECT COALESCE(SUM(i.quantity), 0)
              FROM item i
                  INNER JOIN cart c
                      ON c.id = i.cart_id
-             WHERE c.is_paid = true
+             WHERE c.state = 2
                    AND i.product_variant_id IN (
                                                    SELECT pv.id FROM product_variant pv WHERE pv.product_id = id
                                                ))

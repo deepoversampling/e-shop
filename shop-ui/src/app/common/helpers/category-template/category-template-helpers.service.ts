@@ -14,8 +14,7 @@ export class CategoryTemplateHelpersService { // FIXME DONE
   constructor(
     private readonly _categoryTemplateService: CategoryTemplateControllerService,
     private readonly _propertyHelpersService: PropertyHelpersService
-  ) {
-  }
+  ) {}
 
   // Fetches and returns category templates map for leaf categories and applies continuous-property constraints on them
   public async getCategoryTemplatesMap(rootCategory: CategoryResponseDto): Promise<Record<number, CategoryTemplateResponseDto>> {
